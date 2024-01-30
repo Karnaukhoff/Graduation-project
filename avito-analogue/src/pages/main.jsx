@@ -9,13 +9,20 @@ export const Main = () => {
                     <S.HeaderBtnMainEnter>Вход в личный кабинет</S.HeaderBtnMainEnter>
                 </S.HeaderNav>
             </S.Header>
-            <Main>
+            <main>
                 <S.MainSearch>
-                    <S.SearchLogoLink href="#">
+                    <S.SearchLogoLink to="/">
                         <S.SearchLogoIMG src="/img/logo.png" alt="logo" />
                     </S.SearchLogoLink>
+                    <S.SearchForm>
+                        <S.SearchText 
+                        type="search"
+                        placeholder="Поиск по объявлениям"
+                        name="search"
+                        />
+                    </S.SearchForm>
                 </S.MainSearch>
-            </Main>
+            </main>
        </S.Container>
     )
 }
