@@ -50,7 +50,7 @@ export const MainSearch = styled.div`
         -ms-flex-pack: justify;
             justify-content: space-between;
     padding: 11px 0;
-    max-width: 1178px;
+    max-width: 1240px;
     margin: 0 auto;
     padding: 31px 10px 0px;
 `;
@@ -58,6 +58,7 @@ export const SearchLogoLink = styled(NavLink)``;
 export const SearchLogoIMG = styled.img`
     width: 54px;
     height: auto;
+    margin-top: 35px;
 `;
 export const SearchForm = styled.form`
     width: 100%;
@@ -73,7 +74,7 @@ export const SearchForm = styled.form`
     padding: 11px 0;
     max-width: 1178px;
     margin: 0 auto;
-    padding: 31px 10px 0px;
+    padding: 31px 70px 0px;
 `;
 export const SearchText = styled.input`
     width: 100%;
@@ -89,4 +90,145 @@ export const SearchText = styled.input`
     font-size: 16px;
     line-height: 24px;
     color: #000000;
+    &::-webkit-input-placeholder {
+        background-color: transparent;
+        color: rgba(0, 0, 0, 0.3);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    &:-ms-input-placeholder {
+        background-color: transparent;
+        color: rgba(0, 0, 0, 0.3);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    &::-ms-input-placeholder {
+        background-color: transparent;
+        color: rgba(0, 0, 0, 0.3);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    &::placeholder {
+        background-color: transparent;
+        color: rgba(0, 0, 0, 0.3);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+    }
+`;
+export const SearchBtn = styled.button`
+    margin-left: 10px;
+    width: 158px;
+    height: 50px;
+    background-color: #009EE4;
+    border: 1px solid #009EE4;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+    &:hover {
+        background-color: #0080C1;
+    }
+`;
+export const MainContainer = styled.div`
+    max-width: 1178px;
+    margin: 0 auto;
+    padding: 52px 10px 37px;
+`;
+export const MainTitle = styled.h2`
+    font-style: normal;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 42px;
+    color: #000000;
+    margin-bottom: 30px;
+`;
+export const MainContent = styled.h2`
+    width: 100%;
+    margin: 0 auto;
+`;
+export const MainCards = styled.div`
+    max-width: 1158px;
+    width: 100%;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (270px)[4];
+        grid-template-columns: repeat(4, 270px);
+    grid-auto-rows: 441px;
+    grid-gap: 40px 26px;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    overflow-y: auto;
+    scrollbar-color: #FFFFFF #2E2E2E;
+    scrollbar-width: thin;
+    scrollbar-width: 0px;
+    height: 922px;
+    &::-webkit-scrollbar {
+        width: 0px;
+        background-color: #009EE4;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #0080C1;
+        border-radius: 3px;
+    }
+`;
+export const Item = styled.div`
+    margin: 0;
+`;
+export const Adv = styled.div`
+    width: 270px;
+    height: 441px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+`;
+export const AdvImg = styled.div`
+    width: 270px;
+    height: 270px;
+    background-color: #F0F0F0;
+`;
+export const AdvImgLink = styled.a``;
+export const AdvPhoto = styled.img``;
+export const AdvContent = styled.div``;
+export const AdvContentLink = styled.a``;
+export const AdvContentTitle = styled.h3`
+    height: 52px;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 26px;
+    color: #009EE4;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+`;
+export const AdvContentPrice = styled.p`
+    color: #000000;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 33px;
+    margin-bottom: 10px;
+`;
+export const AdvContentPlace = styled.p`
+    font-size: 16px;
+    line-height: 21px;
+    color: #5F5F5F;
+    margin-bottom: 4px;
+`;
+export const AdvContentDate = styled.p`
+    font-size: 16px;
+    line-height: 21px;
+    color: #5F5F5F;
 `;
