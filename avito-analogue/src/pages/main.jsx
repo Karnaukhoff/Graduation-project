@@ -6,7 +6,9 @@ export const Main = () => {
        <S.Container>
             <S.Header>
                 <S.HeaderNav>
-                    <S.HeaderBtnMainEnter>Вход в личный кабинет</S.HeaderBtnMainEnter>
+                    <S.HeaderBtnMainEnter onClick={() => window.location.href="/register"}>
+                        Вход в личный кабинет
+                    </S.HeaderBtnMainEnter>
                 </S.HeaderNav>
             </S.Header>
             <main>
