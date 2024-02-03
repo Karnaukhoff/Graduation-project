@@ -4,6 +4,7 @@ import { Main } from "./pages/main";
 import { Profile } from "./pages/Profile";
 import { NotFound } from "./pages/NotFound";
 import { Authorization } from "./pages/auth";
+import { Advertisement } from "./pages/adv";
 
 export const AppRoutes = () => {
   
@@ -12,6 +13,7 @@ export const AppRoutes = () => {
             <Route path="/" element={<Main />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Authorization />} />
+            <Route path="/advertisement" element={<Advertisement />} />
             <Route path="*" element={<NotFound />} />
         </Routes>  
     );

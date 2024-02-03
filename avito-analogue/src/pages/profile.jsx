@@ -1,25 +1,15 @@
 import React from "react";
 import * as S from "./styles/profile-styles"
+import Header from "../components/Header/Header";
+import  MainMenu  from "../components/MainMenu/MainMenu";
 
 export const Profile = () => {
     return(
     <S.Container>
-        <S.Header>
-            <S.HeaderNav>
-                <S.HeaderBtnMainEnter>Разместить объявление</S.HeaderBtnMainEnter>
-                <S.HeaderBtnMainEnter>Личный кабинет</S.HeaderBtnMainEnter>
-            </S.HeaderNav>
-        </S.Header>
+        <Header />
         <main>
             <S.MainContainer>
-                <S.MainMenu>
-                    <S.MenuLogoLink to="/">
-                        <S.MenuLogoIMG src="/img/logo.png" alt="logo" />
-                    </S.MenuLogoLink>
-                    <S.MenuBtn onClick={() => window.location.href="/"}>
-                        Вернуться на&nbsp;главную
-                    </S.MenuBtn>
-                </S.MainMenu>
+                <MainMenu />
 
                 <S.MainHeader>Здравствуйте, Максим!</S.MainHeader>
                 <S.MainProfile>
@@ -40,19 +30,19 @@ export const Profile = () => {
 
                                     <S.SettingsDiv>
                                         <S.SettingsLabel for="fname">Имя</S.SettingsLabel>
-                                        <S.SettingsOption name="fname" type="text" value="Максим" placeholder="" />
+                                        <S.SettingsOption placeholder="" />
                                     </S.SettingsDiv>
                                     <S.SettingsDiv>
                                         <S.SettingsLabel for="lname">Фамилия</S.SettingsLabel>
-                                        <S.SettingsOption name="lname" type="text" value="Городецкий" placeholder="" />
+                                        <S.SettingsOption placeholder="" />
                                     </S.SettingsDiv>
                                     <S.SettingsDiv>
                                         <S.SettingsLabel for="city">Город</S.SettingsLabel>
-                                        <S.SettingsOption name="city" type="text" value="Санкт-Петербург" placeholder="" />
+                                        <S.SettingsOption placeholder="" />
                                     </S.SettingsDiv>
                                     <S.SettingsDiv>
                                         <S.SettingsLabel for="phone">Телефон</S.SettingsLabel> 
-                                        <S.SettingsOptionPhone name="phone" type="tel" value="89161234567" placeholder="+79161234567" />
+                                        <S.SettingsOptionPhone placeholder="" />
                                     </S.SettingsDiv>
 
                                     <S.SettingsBtn>Сохранить</S.SettingsBtn>
