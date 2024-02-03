@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "./styles/my-adv-styles"
+import * as S from "./styles/my-adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 

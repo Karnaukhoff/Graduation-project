@@ -6,6 +6,7 @@ import { NotFound } from "./pages/NotFound";
 import { Authorization } from "./pages/auth";
 import { Advertisement } from "./pages/adv";
 import { MyAdvertisement } from "./pages/my-adv";
+import { Seller } from "./pages/seller";
 
 export const AppRoutes = () => {
   
@@ -16,6 +17,7 @@ export const AppRoutes = () => {
             <Route path="/register" element={<Authorization />} />
             <Route path="/advertisement" element={<Advertisement />} />
             <Route path="/my_ad" element={<MyAdvertisement />} />
+            <Route path="/seller" element={<Seller />} />
             <Route path="*" element={<NotFound />} />
         </Routes>  
     );
