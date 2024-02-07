@@ -6,6 +6,7 @@ import MainMenu from "../components/MainMenu/MainMenu";
 
 export const MyAdvertisement = () => {
     const [modalIsOpenEdit, setModalIsOpenEdit] = useState(false);
+    const [modalIsOpenReview, setModalIsOpenReview] = useState(false);
 
     const openModalEdit = () => {
       setModalIsOpenEdit(true);
@@ -14,6 +15,14 @@ export const MyAdvertisement = () => {
     const closeModalEdit = () => {
       setModalIsOpenEdit(false);
     };
+
+    const openModalReview = () => {
+        setModalIsOpenReview(true);
+      };
+    
+      const closeModalReview = () => {
+        setModalIsOpenReview(false);
+      };
   
     const modalContentEdit = (
       <>
@@ -62,6 +71,95 @@ export const MyAdvertisement = () => {
       <S.ModalPublishButton>Сохранить</S.ModalPublishButton>
       </>
     );
+    const modalContentReviews = (
+        <>
+        <S.ModalHeader>
+          <S.ModalHeaderTitle>Отзывы о товаре</S.ModalHeaderTitle>
+          <S.ModalHeaderClose src="/img/close_modal.png" alt="close" onClick={closeModalReview}/>
+        </S.ModalHeader>
+        <S.ModalAddReviewForm>
+            <S.ModalAddReviewNewArtBlock>
+                <S.ModalAddReviewlabel>Добавить отзыв</S.ModalAddReviewlabel>
+                <S.ModalAddReviewTextear cols="auto" rows="5" placeholder="Введите описание"></S.ModalAddReviewTextear>
+            </S.ModalAddReviewNewArtBlock>
+            <S.ModalAddReviewButton>Опубликовать</S.ModalAddReviewButton>
+        </S.ModalAddReviewForm>
+        <S.ModalReviews>
+
+            <S.Review>
+                <S.ReviewItem>
+                    <S.ReviewLeft>
+                        <S.ReviewImg>
+                            <S.ReviewImgPicture src="" alt=""/>
+                        </S.ReviewImg>
+                    </S.ReviewLeft>
+                    <S.ReviewRight>
+                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
+                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
+                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
+                    </S.ReviewRight>
+                </S.ReviewItem>
+            </S.Review>
+            <S.Review>
+                <S.ReviewItem>
+                    <S.ReviewLeft>
+                        <S.ReviewImg>
+                            <S.ReviewImgPicture src="" alt=""/>
+                        </S.ReviewImg>
+                    </S.ReviewLeft>
+                    <S.ReviewRight>
+                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
+                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
+                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
+                    </S.ReviewRight>
+                </S.ReviewItem>
+            </S.Review>
+            <S.Review>
+                <S.ReviewItem>
+                    <S.ReviewLeft>
+                        <S.ReviewImg>
+                            <S.ReviewImgPicture src="" alt=""/>
+                        </S.ReviewImg>
+                    </S.ReviewLeft>
+                    <S.ReviewRight>
+                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
+                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
+                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
+                    </S.ReviewRight>
+                </S.ReviewItem>
+            </S.Review>
+            <S.Review>
+                <S.ReviewItem>
+                    <S.ReviewLeft>
+                        <S.ReviewImg>
+                            <S.ReviewImgPicture src="" alt=""/>
+                        </S.ReviewImg>
+                    </S.ReviewLeft>
+                    <S.ReviewRight>
+                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
+                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
+                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
+                    </S.ReviewRight>
+                </S.ReviewItem>
+            </S.Review>
+            <S.Review>
+                <S.ReviewItem>
+                    <S.ReviewLeft>
+                        <S.ReviewImg>
+                            <S.ReviewImgPicture src="" alt=""/>
+                        </S.ReviewImg>
+                    </S.ReviewLeft>
+                    <S.ReviewRight>
+                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
+                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
+                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
+                    </S.ReviewRight>
+                </S.ReviewItem>
+            </S.Review>
+
+        </S.ModalReviews>
+        </>
+    );
 
 
     return(
@@ -107,7 +205,23 @@ export const MyAdvertisement = () => {
                                 <S.ArticInfo>
                                     <S.ArticDate>Сегодня в 10:45</S.ArticDate>
                                     <S.ArticCity>Санкт-Петербург</S.ArticCity>
-                                    <S.ArticLink href="" target="_blank" rel="">4 отзыва</S.ArticLink>
+                                    <S.ArticLink href="#" onClick={openModalReview}>4 отзыва</S.ArticLink>
+                                    <Modal isOpen={modalIsOpenReview} onRequestClose={closeModalReview} style={
+                                        {
+                                            content: {
+                                                width: "600px",
+                                                height: "800px",
+                                                inset: "unset"
+                                            },
+                                            overlay: {
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center"
+                                            }
+                                        }
+                                    }>
+                                        {modalContentReviews}
+                                     </Modal>
                                 </S.ArticInfo>
                                 <S.ArticPrice>2 200 ₽</S.ArticPrice>
                                 <S.ArticleBtnBlock>

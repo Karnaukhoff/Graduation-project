@@ -404,3 +404,156 @@ export const ModalPublishButton = styled.button`
     background-color: #0080C1;
   }
 `;
+export const ModalScroll = styled.div`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 100%;
+  overflow-y: auto;
+  scrollbar-color: #FFFFFF #2E2E2E;
+  scrollbar-width: thin;
+  scrollbar-width: 0px;
+  &::-webkit-scrollbar {
+    width: 0px;
+    background-color: #FFFFFF;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #D9D9D9;
+    border-radius: 0px;
+  }
+`;
+export const ModalAddReviewForm = styled.form`
+  margin-top: 5px;
+  margin-bottom: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+`;
+export const ModalAddReviewNewArtBlock = styled.div`
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 14px;
+`;
+export const ModalAddReviewlabel = styled.label`
+  margin-bottom: 14px;
+  font-size: 16px;
+  line-height: 32px;
+  font-weight: 600;
+  color: #000000;
+`;
+export const ModalAddReviewTextear = styled.textarea`
+  font-family: 'Roboto', sans-serif;
+  padding: 10px 19px;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 1;
+  width: 550px;
+  height: 100px;
+  max-height: 100px;
+`;
+export const ModalAddReviewButton = styled.button`
+  width: 181px;
+  height: 50px;
+  background: #D9D9D9;
+  border: 1px solid #D9D9D9;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  &:hover {
+    background-color: #0080C1;
+  }
+`;
+export const ModalReviews = styled.div`
+  width: 550px;
+  height: 495px;
+`;
+export const Review= styled.div`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 15px 0;
+`;
+export const ReviewLeft= styled.div`
+  margin-right: 12px;
+`;
+export const ReviewItem= styled.div`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+`;
+export const ReviewImg= styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #F0F0F0;
+`;
+export const ReviewImgPicture= styled.img`
+  display: block;
+  width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+    object-fit: cover;
+`;
+export const ReviewRight= styled.div`
+  display: block;
+  margin-bottom: 25px;
+`;
+export const ReviewName= styled.div`
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 32px;
+  color: #000000;
+`;
+export const ReviewNameSpan= styled.span`
+  margin-left: 10px;
+  color: #5F5F5F;
+`;
+export const ReviewTitle= styled.div`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 32px;
+  color: #000000;
+`;
+export const ReviewText= styled.div`
+  font-size: 16px;
+  line-height: 32px;
+  color: #000000;
+`;
