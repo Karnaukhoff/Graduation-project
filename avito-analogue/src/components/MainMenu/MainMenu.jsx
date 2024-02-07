@@ -7,7 +7,7 @@ function MainMenu(){
         <S.MenuLogoLink to="/">
             <S.MenuLogoIMG src="/img/logo.png" alt="logo" />
         </S.MenuLogoLink>
-        <S.MenuBtn onClick={() => window.location.href="/login"}>
+        <S.MenuBtn onClick={() => window.location.href="/"}>
             Вернуться на&nbsp;главную
         </S.MenuBtn>
     </S.MainMenu>

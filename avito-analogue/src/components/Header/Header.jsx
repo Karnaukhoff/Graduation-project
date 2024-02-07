@@ -89,10 +89,3 @@ function Header() {
   );
 }
 export default Header;
-/*
-    <div>
-      <h2>Заголовок модального окна</h2>
-      <p>Текст модального окна</p>
-      <button onClick={closeModal}>Закрыть</button>
-    </div>
-*/

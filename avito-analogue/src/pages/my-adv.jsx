@@ -1,9 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "react-modal";
 import * as S from "./styles/my-adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 
 export const MyAdvertisement = () => {
+    const [modalIsOpenEdit, setModalIsOpenEdit] = useState(false);
+
+    const openModalEdit = () => {
+      setModalIsOpenEdit(true);
+    };
+  
+    const closeModalEdit = () => {
+      setModalIsOpenEdit(false);
+    };
+  
+    const modalContentEdit = (
+      <>
+      <S.ModalHeader>
+          <S.ModalHeaderTitle>Редактировать объявление</S.ModalHeaderTitle>
+          <S.ModalHeaderClose src="/img/close_modal.png" alt="close" onClick={closeModalEdit}/>
+      </S.ModalHeader>
+      <S.ModalTitle>
+          <S.ModalTitleHeader>Название</S.ModalTitleHeader>
+          <S.ModalTitleInput placeholder="Введите название" />
+      </S.ModalTitle>
+      <S.ModalDescription>
+          <S.ModalDescritionHeader>Описание</S.ModalDescritionHeader>
+          <S.ModalDescriptionInput placeholder="Введите описание"/>
+      </S.ModalDescription>
+      <S.ModalPhotos>
+          <S.ModalFormNewArtP>Фотографии товара <S.ModalFormNewArtSpan>не более 5 фотографий</S.ModalFormNewArtSpan></S.ModalFormNewArtP>
+          <S.ModalAddPhotosBar>
+            <S.ModalAddPhotos>
+                <img src="/img/add_photo.png" alt="add_photo" />
+                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            </S.ModalAddPhotos>
+            <S.ModalAddPhotos>
+                <img src="/img/add_photo.png" alt="add_photo" />
+                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            </S.ModalAddPhotos>
+            <S.ModalAddPhotos>
+                <img src="/img/add_photo.png" alt="add_photo" />
+                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            </S.ModalAddPhotos>
+            <S.ModalAddPhotos>
+                <img src="/img/add_photo.png" alt="add_photo" />
+                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            </S.ModalAddPhotos>
+            <S.ModalAddPhotos>
+                <img src="/img/add_photo.png" alt="add_photo" />
+                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            </S.ModalAddPhotos>
+          </S.ModalAddPhotosBar>
+      </S.ModalPhotos>
+      <S.ModalBlockPrice>
+        <label for="price">Цена</label>
+        <S.ModalInputPrice />
+        <S.ModalInputPriceCover></S.ModalInputPriceCover>
+      </S.ModalBlockPrice>
+      <S.ModalPublishButton>Сохранить</S.ModalPublishButton>
+      </>
+    );
+
+
     return(
         <S.Container>
             <Header />
@@ -51,7 +111,23 @@ export const MyAdvertisement = () => {
                                 </S.ArticInfo>
                                 <S.ArticPrice>2 200 ₽</S.ArticPrice>
                                 <S.ArticleBtnBlock>
-                                    <S.BtnEdit>Редактировать</S.BtnEdit>
+                                    <S.BtnEdit onClick={openModalEdit}>Редактировать</S.BtnEdit>
+                                    <Modal isOpen={modalIsOpenEdit} onRequestClose={closeModalEdit} style={
+                                        {
+                                            content: {
+                                                width: "600px",
+                                                height: "800px",
+                                                inset: "unset"
+                                            },
+                                            overlay: {
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center"
+                                            }
+                                        }
+                                    }>
+                                        {modalContentEdit}
+                                     </Modal>
                                     <S.BtnRemove>Снять с публикации</S.BtnRemove>
                                 </S.ArticleBtnBlock>
                                 <S.ArticleAuthor>
