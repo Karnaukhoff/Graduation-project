@@ -1,14 +1,98 @@
-import React from "react";
-import * as S from "./Header-styles"
+import * as S from "./Header-styles";
+import React, { useState } from "react";
+import Modal from "react-modal";
 
-function Header(){
-    return(
+function Header() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const modalContent = (
+    <>
+    <S.ModalHeader>
+        <S.ModalHeaderTitle>Новое объявление</S.ModalHeaderTitle>
+        <S.ModalHeaderClose src="/img/close_modal.png" alt="close" onClick={closeModal}/>
+    </S.ModalHeader>
+    <S.ModalTitle>
+        <S.ModalTitleHeader>Название</S.ModalTitleHeader>
+        <S.ModalTitleInput placeholder="Введите название" />
+    </S.ModalTitle>
+    <S.ModalDescription>
+        <S.ModalDescritionHeader>Описание</S.ModalDescritionHeader>
+        <S.ModalDescriptionInput placeholder="Введите описание"/>
+    </S.ModalDescription>
+    <S.ModalPhotos>
+        <S.ModalFormNewArtP>Фотографии товара <S.ModalFormNewArtSpan>не более 5 фотографий</S.ModalFormNewArtSpan></S.ModalFormNewArtP>
+        <S.ModalAddPhotosBar>
+          <S.ModalAddPhotos>
+              <img src="/img/add_photo.png" alt="add_photo" />
+              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+          </S.ModalAddPhotos>
+          <S.ModalAddPhotos>
+              <img src="/img/add_photo.png" alt="add_photo" />
+              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+          </S.ModalAddPhotos>
+          <S.ModalAddPhotos>
+              <img src="/img/add_photo.png" alt="add_photo" />
+              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+          </S.ModalAddPhotos>
+          <S.ModalAddPhotos>
+              <img src="/img/add_photo.png" alt="add_photo" />
+              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+          </S.ModalAddPhotos>
+          <S.ModalAddPhotos>
+              <img src="/img/add_photo.png" alt="add_photo" />
+              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+          </S.ModalAddPhotos>
+        </S.ModalAddPhotosBar>
+    </S.ModalPhotos>
+    <S.ModalBlockPrice>
+      <label for="price">Цена</label>
+      <S.ModalInputPrice />
+      <S.ModalInputPriceCover></S.ModalInputPriceCover>
+    </S.ModalBlockPrice>
+    <S.ModalPublishButton>Опубликовать</S.ModalPublishButton>
+    </>
+  );
+
+  return (
     <S.Header>
-        <S.HeaderNav>
-            <S.HeaderBtnMainEnter>Разместить объявление</S.HeaderBtnMainEnter>
-            <S.HeaderBtnMainEnter>Личный кабинет</S.HeaderBtnMainEnter>
-        </S.HeaderNav>
+      <S.HeaderNav>
+        <S.HeaderBtnMainEnter onClick={openModal}>
+          Разместить объявление
+        </S.HeaderBtnMainEnter>
+        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={
+            {
+                content: {
+                    width: "600px",
+                    height: "800px",
+                    inset: "unset"
+                  },
+                overlay: {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }
+            }
+        }>
+          {modalContent}
+        </Modal>
+        <S.HeaderBtnMainEnter>Личный кабинет</S.HeaderBtnMainEnter>
+      </S.HeaderNav>
     </S.Header>
-    )
+  );
 }
 export default Header;
+/*
+    <div>
+      <h2>Заголовок модального окна</h2>
+      <p>Текст модального окна</p>
+      <button onClick={closeModal}>Закрыть</button>
+    </div>
+*/
