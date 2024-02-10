@@ -71,6 +71,7 @@ export const MyAdvertisement = () => {
       <S.ModalPublishButton>Сохранить</S.ModalPublishButton>
       </>
     );
+    
     const modalContentReviews = (
         <>
         <S.ModalHeader>

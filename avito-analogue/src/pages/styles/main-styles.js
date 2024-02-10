@@ -55,10 +55,14 @@ export const MainSearch = styled.div`
     padding: 31px 10px 0px;
 `;
 export const SearchLogoLink = styled(NavLink)``;
+export const SearchLogoLinkMob = styled(NavLink)``;
 export const SearchLogoIMG = styled.img`
     width: 54px;
     height: auto;
     margin-top: 35px;
+`;
+export const SearchLogoIMGMob = styled.img`
+    display: none;
 `;
 export const SearchForm = styled.form`
     width: 100%;
@@ -122,6 +126,9 @@ export const SearchText = styled.input`
         font-size: 16px;
         line-height: 24px;
     }
+`;
+export const SearchTextMob = styled.input`
+    display: none;
 `;
 export const SearchBtn = styled.button`
     margin-left: 10px;

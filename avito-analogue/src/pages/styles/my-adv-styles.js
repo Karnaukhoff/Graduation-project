@@ -404,31 +404,6 @@ export const ModalPublishButton = styled.button`
     background-color: #0080C1;
   }
 `;
-export const ModalScroll = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  width: 100%;
-  overflow-y: auto;
-  scrollbar-color: #FFFFFF #2E2E2E;
-  scrollbar-width: thin;
-  scrollbar-width: 0px;
-  &::-webkit-scrollbar {
-    width: 0px;
-    background-color: #FFFFFF;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #D9D9D9;
-    border-radius: 0px;
-  }
-`;
 export const ModalAddReviewForm = styled.form`
   margin-top: 5px;
   margin-bottom: 15px;

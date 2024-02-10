@@ -16,13 +16,21 @@ export const Main = () => {
                     <S.SearchLogoLink to="/">
                         <S.SearchLogoIMG src="/img/logo.png" alt="logo" />
                     </S.SearchLogoLink>
+                    <S.SearchLogoLinkMob to="/">
+                        <S.SearchLogoIMGMob src="/img/logo-mob.png" alt="logo" />
+                    </S.SearchLogoLinkMob>
                     <S.SearchForm>
                         <S.SearchText 
                         type="search"
                         placeholder="Поиск по объявлениям"
                         name="search"
                         />
-                    <   S.SearchBtn>Найти</S.SearchBtn>
+                        <S.SearchTextMob 
+                            type="search"
+                            placeholder="Поиск по объявлениям"
+                            name="search"
+                        />
+                        <S.SearchBtn>Найти</S.SearchBtn>
                     </S.SearchForm>
                 </S.MainSearch>
                 <S.MainContainer>
