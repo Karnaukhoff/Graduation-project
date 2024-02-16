@@ -1,184 +1,70 @@
-import React from "react";
-import * as S from "./styles/main-styles"
+import React, { useEffect } from "react";
+import * as S from "./styles/main-styles";
+import Advertisement from "../components/Advertisement/Advertisement";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllAds } from "../api/api";
+import { setAllAds } from "../store/slices/adSlice";
 
 export const Main = () => {
-    return(
-       <S.Container>
-            <S.Header>
-                <S.HeaderNav>
-                    <S.HeaderBtnMainEnter onClick={() => window.location.href="/register"}>
-                        Вход в личный кабинет
-                    </S.HeaderBtnMainEnter>
-                </S.HeaderNav>
-            </S.Header>
-            <main>
-                <S.MainSearch>
-                    <S.SearchLogoLink to="/">
-                        <S.SearchLogoIMG src="/img/logo.png" alt="logo" />
-                    </S.SearchLogoLink>
-                    <S.SearchLogoLinkMob to="/">
-                        <S.SearchLogoIMGMob src="/img/logo-mob.png" alt="logo" />
-                    </S.SearchLogoLinkMob>
-                    <S.SearchForm>
-                        <S.SearchText 
-                        type="search"
-                        placeholder="Поиск по объявлениям"
-                        name="search"
-                        />
-                        <S.SearchTextMob 
-                            type="search"
-                            placeholder="Поиск по объявлениям"
-                            name="search"
-                        />
-                        <S.SearchBtn>Найти</S.SearchBtn>
-                    </S.SearchForm>
-                </S.MainSearch>
-                <S.MainContainer>
-                    <S.MainTitle>Объявления</S.MainTitle>
-                    <S.MainContent>
-                        <S.MainCards>
+  const allAds = useSelector((state) => state.advertisement.all);
+  const dispatch = useDispatch();
 
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-
-                        </S.MainCards>
-                    </S.MainContent>
-                </S.MainContainer>
-            </main>
-       </S.Container>
-    )
-}
+  useEffect(() => {
+    (
+      async () => {
+        await getAllAds().then((ads) => {
+          dispatch(setAllAds(ads))
+        });
+      }
+    )()
+    // eslint-disable-next-line
+  }, [])
+  return (
+    <S.Container>
+      <S.Header>
+        <S.HeaderNav>
+          <S.HeaderBtnMainEnter
+            onClick={() => (window.location.href = "/register")}
+          >
+            Вход в личный кабинет
+          </S.HeaderBtnMainEnter>
+        </S.HeaderNav>
+      </S.Header>
+      <main>
+        <S.MainSearch>
+          <S.SearchLogoLink to="/">
+            <S.SearchLogoIMG src="/img/logo.png" alt="logo" />
+          </S.SearchLogoLink>
+          <S.SearchLogoLinkMob to="/">
+            <S.SearchLogoIMGMob src="/img/logo-mob.png" alt="logo" />
+          </S.SearchLogoLinkMob>
+          <S.SearchForm>
+            <S.SearchText
+              type="search"
+              placeholder="Поиск по объявлениям"
+              name="search"
+            />
+            <S.SearchTextMob
+              type="search"
+              placeholder="Поиск по объявлениям"
+              name="search"
+            />
+            <S.SearchBtn>Найти</S.SearchBtn>
+          </S.SearchForm>
+        </S.MainSearch>
+        <S.MainContainer>
+          <S.MainTitle>Объявления</S.MainTitle>
+          <S.MainContent>
+            <S.MainCards>
+              {
+                allAds.map((item) => {
+                  return <Advertisement images={item.images} title={item.title} price={item.price} city={item.city} released={item.created_on} />
+                })
+              }
+            </S.MainCards>
+          </S.MainContent>
+        </S.MainContainer>
+      </main>
+    </S.Container>
+  );
+};

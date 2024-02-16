@@ -2,6 +2,7 @@ import React from "react";
 import * as S from "./styles/seller-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
+import Advertisement from "../components/Advertisement/Advertisement";
 
 export const Seller = () => {
     return(
@@ -39,142 +40,14 @@ export const Seller = () => {
                 <S.MainContent>
                         <S.MainCards>
 
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
-                            <S.Item>
-                                <S.Adv>
-                                    <S.AdvImg>
-                                        <S.AdvImgLink href="#">
-                                            <S.AdvPhoto src="#"/>
-                                        </S.AdvImgLink>
-                                    </S.AdvImg>
-                                    <S.AdvContent>
-                                        <S.AdvContentLink>
-                                            <S.AdvContentTitle>Ракетка для большого тенниса Triumph Pro ST</S.AdvContentTitle>  
-                                        </S.AdvContentLink>
-                                        <S.AdvContentPrice>2&nbsp;200&nbsp;₽</S.AdvContentPrice>
-                                        <S.AdvContentPlace>Санкт-Петербург</S.AdvContentPlace>
-                                        <S.AdvContentDate>Сегодня в&nbsp;10:45</S.AdvContentDate>
-                                    </S.AdvContent>
-                                </S.Adv>
-                            </S.Item>
+                            <Advertisement />
+                            <Advertisement />
+                            <Advertisement />
+                            <Advertisement />
+                            <Advertisement />
+                            <Advertisement />
+                            <Advertisement />
+                            <Advertisement />
 
                         </S.MainCards>
                     </S.MainContent>
