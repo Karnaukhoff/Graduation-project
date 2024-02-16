@@ -2,7 +2,7 @@ import React from "react";
 import * as S from "./Advertisement-styles";
 
 function Advertisement({ images, title, price, city, released }) {
-  //1. показать изображение
+
   function priceFormat(price) {
     let result = "";
     let priceLengthDevide = Math.ceil(price.toString().length / 3) + 1;
@@ -116,12 +116,13 @@ function Advertisement({ images, title, price, city, released }) {
     }
   }
   //4. переключение фотографий
+  console.log()
   return (
     <S.Item>
       <S.Adv>
         <S.AdvImg>
           <S.AdvImgLink href="#">
-            <S.AdvPhoto src="" />
+            <S.AdvPhoto src={images.length > 0 ? `http://localhost:8090/${images[0].url}` : ""} />
           </S.AdvImgLink>
         </S.AdvImg>
         <S.AdvContent>

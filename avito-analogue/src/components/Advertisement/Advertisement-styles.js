@@ -5,7 +5,7 @@ export const Item = styled.div`
 `;
 export const Adv = styled.div`
     width: 270px;
-    height: 441px;
+    height: 495px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -13,6 +13,11 @@ export const Adv = styled.div`
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.25);
+    transition: 0.4s;
+    &:hover{
+        transform: scale(1.01);
+    }
 `;
 export const AdvImg = styled.div`
     width: 270px;
@@ -20,17 +25,18 @@ export const AdvImg = styled.div`
     background-color: #F0F0F0;
 `;
 export const AdvImgLink = styled.a``;
-export const AdvPhoto = styled.img``;
+export const AdvPhoto = styled.img`
+    width: 268px;
+    height: 270px;
+    border: 1px solid #000000;
+`;
 export const AdvContent = styled.div``;
 export const AdvContentLink = styled.a``;
 export const AdvContentTitle = styled.h3`
-    height: 52px;
     font-size: 22px;
     font-weight: 500;
     line-height: 26px;
     color: #009EE4;
-    margin-bottom: 10px;
-    margin-top: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
 `;

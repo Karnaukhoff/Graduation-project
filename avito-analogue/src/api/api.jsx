@@ -1,4 +1,4 @@
-const baseURL = " http://localhost:8090";
+const baseURL = "http://localhost:8090";
 
 export async function getAllAds(){
     const response = await fetch(
