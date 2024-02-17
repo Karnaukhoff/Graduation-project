@@ -1,21 +1,23 @@
 import React from "react";
 import * as S from "./styles/Auth-style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getAllUsers, signUp } from "../api/api";
+import { getAllUsers, logIn, signUp } from "../api/api";
 import { useDispatch } from "react-redux";
+import { setToken, setUser } from "../store/slices/userSlice";
 
 export function Authorization() {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
-    const [name, setName] = useState("")
-    const [surname, setSurname] = useState("")
-    const [city, setCity] = useState("")
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [city, setCity] = useState("");
     const [isLoginMode, setIsLoginMode] = useState(true);
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
   
     const handleLogin = async ({ email, password }) => {
       setLoading(true)
@@ -30,19 +32,26 @@ export function Authorization() {
         return
       }
       
-      /*login({email, password})
-      .then((user) => {
-        if (user.detail === "Пользователь с таким email или паролем не найден"){
-          setError(user.detail)
-          return
-        }
-        setUser(user.username)
-        localStorage.setItem("user", user.username);
-        window.location.href="/"
+      logIn({email, password})
+      .then((userToken) => {
+        getAllUsers().then((users) => {
+          // eslint-disable-next-line
+          users.map((user) => {
+            if (user.email === email){
+              dispatch(setUser(user))
+            }
+          })
+        })
+        dispatch(setToken(userToken))
+        navigate("/")
+        })
+        .catch((item) => {
+          console.log(item)
+          setError(item.message)
         })
         .finally(() => {
           setLoading(false)
-        })*/
+        })
     };
   
     const handleRegister = async ({email, password, repeatPassword, name, surname, city}) => {
@@ -64,17 +73,12 @@ export function Authorization() {
       }
       signUp({email, password, name, surname, city})
       .then((user) => {
-        getAllUsers().then((items) => {
-          // eslint-disable-next-line
-          items.map((item) => {
-            if (item.email === email){
-              setError("Пользователь с таким адрес электронной почты уже существует.")
-            }
-          })
-          if (error !== null) return
-          dispatch(user)
-          window.location.href="/"
-        })
+        console.log(user)
+        dispatch(setUser(user))
+        navigate("/")
+      })
+      .catch((item) => {
+        setError(item.message)
       })
       .finally(() => {
         setLoading(false)
@@ -163,7 +167,7 @@ export function Authorization() {
                   placeholder="Имя (необязательно)"
                   value={name}
                   onChange={(event) => {
-                    setName(event.target.value)
+                    setName(event.target.value);
                   }}
                 />
                 <S.ModalInput
@@ -172,7 +176,7 @@ export function Authorization() {
                   placeholder="Фамилия (необязательно)"
                   value={surname}
                   onChange={(event) => {
-                    setSurname(event.target.value)
+                    setSurname(event.target.value);
                   }}
                 />
                 <S.ModalInput
@@ -181,13 +185,13 @@ export function Authorization() {
                   placeholder="Город (необязательно)"
                   value={city}
                   onChange={(event) => {
-                    setCity(event.target.value)
+                    setCity(event.target.value);
                   }}
                 />
               </S.Inputs>
               {error && <S.Error>{error}</S.Error>}
               <S.Buttons>
-                <S.PrimaryButton disabled={loading} onClick={() => handleRegister({email, password, repeatPassword})}>
+                <S.PrimaryButton disabled={loading} onClick={() => handleRegister({email, password, repeatPassword, name, surname, city})}>
                   Зарегистрироваться
                 </S.PrimaryButton>
               </S.Buttons>

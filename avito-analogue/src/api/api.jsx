@@ -21,9 +21,30 @@ export async function signUp({ email, password, name, surname, city }) {
           name: name,
           surname: surname,
           city: city,
-          role: "user",
+          role: "user"
         }),
         headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
+    if (response.status === 500) {
+      throw new Error("Сервер не отвечает");
+    }
+    const user = await response.json();
+    return user;
+  }
+  export async function logIn({ email, password }) {
+    const response = await fetch(
+        `${baseURL}/auth/login`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+        headers: {
+          // API требует обязательного указания заголовка content-type, так апи понимает что мы посылаем ему json строчку в теле запроса
           "content-type": "application/json",
         },
       }
