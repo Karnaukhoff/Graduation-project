@@ -4,6 +4,7 @@ import Advertisement from "../components/Advertisement/Advertisement";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllAds } from "../api/api";
 import { setAllAds } from "../store/slices/adSlice";
+import Header from "../components/Header/Header";
 
 export const Main = () => {
   const allAds = useSelector((state) => state.advertisement.all);
@@ -23,11 +24,7 @@ export const Main = () => {
     <S.Container>
       <S.Header>
         <S.HeaderNav>
-          <S.HeaderBtnMainEnter
-            onClick={() => (window.location.href = "/register")}
-          >
-            Вход в личный кабинет
-          </S.HeaderBtnMainEnter>
+          <Header />
         </S.HeaderNav>
       </S.Header>
       <main>

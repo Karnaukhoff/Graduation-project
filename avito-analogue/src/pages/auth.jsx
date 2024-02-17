@@ -38,6 +38,7 @@ export function Authorization() {
           // eslint-disable-next-line
           users.map((user) => {
             if (user.email === email){
+              localStorage.setItem("authData", JSON.stringify(user))
               dispatch(setUser(user))
             }
           })

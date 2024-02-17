@@ -1,9 +1,11 @@
 import * as S from "./Header-styles";
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { useSelector } from "react-redux";
 
 function Header() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const user = useSelector((state) => state.user.user)
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -64,6 +66,9 @@ function Header() {
   return (
     <S.Header>
       <S.HeaderNav>
+        {
+          user !== null ? 
+        <>
         <S.HeaderBtnMainEnter onClick={openModal}>
           Разместить объявление
         </S.HeaderBtnMainEnter>
@@ -84,6 +89,15 @@ function Header() {
           {modalContent}
         </Modal>
         <S.HeaderBtnMainEnter>Личный кабинет</S.HeaderBtnMainEnter>
+        </>
+         :           
+        <S.HeaderBtnMainEnter
+        onClick={() => (window.location.href = "/register")}
+      >
+        Вход в личный кабинет
+      </S.HeaderBtnMainEnter>
+        }
+        
       </S.HeaderNav>
     </S.Header>
   );
