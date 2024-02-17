@@ -122,7 +122,8 @@ function Advertisement({ images, title, price, city, released }) {
       <S.Adv>
         <S.AdvImg>
           <S.AdvImgLink href="#">
-            <S.AdvPhoto src={images.length > 0 ? `http://localhost:8090/${images[0].url}` : ""} />
+            <S.AdvPhoto src={`http://localhost:8090/${images[0]?.url}`} />
+            
           </S.AdvImgLink>
         </S.AdvImg>
         <S.AdvContent>
@@ -138,3 +139,10 @@ function Advertisement({ images, title, price, city, released }) {
   );
 }
 export default Advertisement;
+/*
+            {
+              images.length > 0 ? images.map((item) => {
+                return <S.AdvPhoto src={`http://localhost:8090/${item.url}`} />
+              }) : <S.AdvPhoto src="" />
+            }
+*/

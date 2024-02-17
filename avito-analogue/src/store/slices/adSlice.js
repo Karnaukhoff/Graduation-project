@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit"
 const initialState = {
     all: [],
     my: [],
-    seller: []
+    seller: [],
 }
 
 export const adSlice = createSlice({
@@ -21,5 +21,5 @@ export const adSlice = createSlice({
     }
 })
 
-export const { setAllAds, setMyAds, setSellerAds} = adSlice.actions
+export const { setAllAds, setMyAds, setSellerAds } = adSlice.actions
 export default adSlice.reducer

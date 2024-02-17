@@ -58,7 +58,13 @@ export const Main = () => {
             <S.MainCards>
               {
                 allAds.map((item) => {
-                  return <Advertisement images={item.images} title={item.title} price={item.price} city={item.city} released={item.created_on} />
+                  return <Advertisement 
+                  images={item.images} 
+                  title={item.title} 
+                  price={item.price} 
+                  city={item.city} 
+                  released={item.created_on} 
+                  />
                 })
               }
             </S.MainCards>

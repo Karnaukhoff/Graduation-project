@@ -13,11 +13,11 @@ export const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Authorization />} />
-            <Route path="/advertisement" element={<Advertisement />} />
-            <Route path="/my_ad" element={<MyAdvertisement />} />
-            <Route path="/seller" element={<Seller />} />
+            <Route path="/profile" element={<Profile />} />
+                <Route path="/advertisement" element={<Advertisement />} />
+                <Route path="/my_ad" element={<MyAdvertisement />} />
+                <Route path="/seller" element={<Seller />} />
             <Route path="*" element={<NotFound />} />
         </Routes>  
     );

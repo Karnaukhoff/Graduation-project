@@ -2,14 +2,20 @@ import React from "react";
 import * as S from "./styles/Auth-style";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getAllUsers, signUp } from "../api/api";
+import { useDispatch } from "react-redux";
 
 export function Authorization() {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
+    const [name, setName] = useState("")
+    const [surname, setSurname] = useState("")
+    const [city, setCity] = useState("")
     const [isLoginMode, setIsLoginMode] = useState(true);
     const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch();
   
     const handleLogin = async ({ email, password }) => {
       setLoading(true)
@@ -39,7 +45,7 @@ export function Authorization() {
         })*/
     };
   
-    const handleRegister = async ({email, password, repeatPassword}) => {
+    const handleRegister = async ({email, password, repeatPassword, name, surname, city}) => {
       setLoading(true)
       if (email === ""){
         setError("Укажите почту")
@@ -56,25 +62,23 @@ export function Authorization() {
         setLoading(false)
         return
       }
-      /*signUp({email, password})
+      signUp({email, password, name, surname, city})
       .then((user) => {
-        if (user.email === "Пользователь с таким адрес электронной почты уже существует."){
-          setError(user.email)
-          return
-        }
-        if (user.username === "Пользователь с таким именем уже существует."){
-          setError(user.username)
-          return
-        }
-        if (user.password !== password && user.password !== undefined){
-          setError(user.password[0])
-          return
-        }
-        window.location.href="/login"
+        getAllUsers().then((items) => {
+          // eslint-disable-next-line
+          items.map((item) => {
+            if (item.email === email){
+              setError("Пользователь с таким адрес электронной почты уже существует.")
+            }
+          })
+          if (error !== null) return
+          dispatch(user)
+          window.location.href="/"
+        })
       })
       .finally(() => {
         setLoading(false)
-      })*/
+      })
     };
   
     // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
@@ -86,7 +90,7 @@ export function Authorization() {
     return (
         <S.PageContainer>
         <S.ModalForm>
-          <Link to="/register" onClick={() => setIsLoginMode(true)}>
+          <Link to="/" onClick={() => setIsLoginMode(true)}>
             <S.ModalLogo>
               <S.ModalLogoImage src="/img/logo_modal.png" alt="logo" />
             </S.ModalLogo>
@@ -157,19 +161,28 @@ export function Authorization() {
                   type="text"
                   name="name"
                   placeholder="Имя (необязательно)"
-                  //Логика ввода
+                  value={name}
+                  onChange={(event) => {
+                    setName(event.target.value)
+                  }}
                 />
                 <S.ModalInput
                   type="text"
                   name="surname"
                   placeholder="Фамилия (необязательно)"
-                  //Логика ввода
+                  value={surname}
+                  onChange={(event) => {
+                    setSurname(event.target.value)
+                  }}
                 />
                 <S.ModalInput
                   type="text"
                   name="city"
                   placeholder="Город (необязательно)"
-                  //Логика ввода
+                  value={city}
+                  onChange={(event) => {
+                    setCity(event.target.value)
+                  }}
                 />
               </S.Inputs>
               {error && <S.Error>{error}</S.Error>}
