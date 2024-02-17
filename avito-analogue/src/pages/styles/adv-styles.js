@@ -45,14 +45,18 @@ export const ArticFillImg = styled.div`
   align-items: center;
 `;
 export const ArticImgBlock = styled.div`
-  width: 480px;
+  width: 490px;
   height: 480px;
   background-color: #f0f0f0;
   margin: 0 5px;
 `;
+export const BigImage = styled.img`
+  width: 490px;
+  height: 480px;
+`;
 export const ArticImgBar = styled.div`
   margin-top: 30px;
-  width: 490px;
+  width: 504px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -79,7 +83,7 @@ export const ArticImgBarDiv = styled.div`
 `;
 export const ArticImgBarDivPicture = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;

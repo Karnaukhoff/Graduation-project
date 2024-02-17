@@ -21,7 +21,7 @@ export async function signUp({ email, password, name, surname, city }) {
           name: name,
           surname: surname,
           city: city,
-          role: "user"
+          role: "user",
         }),
         headers: {
           "content-type": "application/json",
@@ -64,4 +64,14 @@ export async function signUp({ email, password, name, surname, city }) {
       }
       const data = await response.json();
       return data;
+}
+export async function getAd(id){
+    const response = await fetch(
+        `${baseURL}/ads/${id}`
+    );
+    if (!response.ok) {
+        throw new Error("Ошибка сервера");
+      }
+      const ad = await response.json();
+      return ad;
 }

@@ -61,6 +61,7 @@ export const Main = () => {
                   price={item.price} 
                   city={item.city} 
                   released={item.created_on} 
+                  id={item.id}
                   />
                 })
               }
