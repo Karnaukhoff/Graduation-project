@@ -1,58 +1,104 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./styles/seller-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import Advertisement from "../components/Advertisement/Advertisement";
+import { getAllAds, getAllUsers } from "../api/api";
+import { sellsFrom } from "../usefulFunctions";
+import { useDispatch, useSelector } from "react-redux";
+import { setAllAds } from "../store/slices/adSlice";
 
 export const Seller = () => {
-    return(
-        <S.Container>
-        <Header />
-        <main>
-            <S.MainContainer>
-                <MainMenu />
+  const [user, setUser] = useState(null);
+  const [show, setShow] = useState(false);
+  const allAds = useSelector((state) => state.advertisement.all);
+  const dispatch = useDispatch();
 
-                <S.MainHeader>Профиль продавца</S.MainHeader>
-                <S.MainProfile>
-                        <S.ProfileSeller>
+  useEffect(() => {
+    getAllUsers()
+      .then((items) => {
+        // eslint-disable-next-line
+        items.map((item) => {
+          if (item.id === JSON.parse(localStorage.getItem("userId"))) {
+            setUser(item);
+          }
+        });
+      })
+      .then(() => {
+        (async () => {
+          await getAllAds().then((ads) => {
+            dispatch(setAllAds(ads));
+          });
+        })();
+      });
+    // eslint-disable-next-line
+  }, []);
 
-                            <S.SellerLeft>
-                                <S.SellerImg>
-                                    <S.SellerImgLink>
-                                        <S.SellerImgPhoto />
-                                    </S.SellerImgLink>
-                                </S.SellerImg>
-                            </S.SellerLeft>
-                            <S.SellerRight>
-                                <S.SellerTitle>Кирилл Матвеев</S.SellerTitle>
-                                <S.SellerCity_Inf>Санкт-Петербург</S.SellerCity_Inf>
-                                <S.SellerCity_Inf>Продает товары с августа 2021</S.SellerCity_Inf>
+  return (
+    <S.Container>
+      <Header />
+      <main>
+        <S.MainContainer>
+          <MainMenu />
 
-                                <S.SellerButton>Показать&nbsp;телефон
-                                    <S.SellerButtonSpan>8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;Х</S.SellerButtonSpan>
-                                </S.SellerButton>
-                            </S.SellerRight>
+          <S.MainHeader>Профиль продавца</S.MainHeader>
+          <S.MainProfile>
+            <S.ProfileSeller>
+              <S.SellerLeft>
+                <S.SellerImg>
+                  <S.SellerImgLink>
+                    <S.SellerImgPhoto src={`http://localhost:8090/${user?.avatar}`}/>
+                  </S.SellerImgLink>
+                </S.SellerImg>
+              </S.SellerLeft>
+              <S.SellerRight>
+                <S.SellerTitle>
+                  {user?.name ? user.name : null}{" "}
+                  {user?.surname ? user.surname : null}
+                </S.SellerTitle>
+                <S.SellerCity_Inf>
+                  {user?.city ? user.city : null}
+                </S.SellerCity_Inf>
+                <S.SellerCity_Inf>
+                  {user?.sells_from ? sellsFrom(user?.sells_from) : null}
+                </S.SellerCity_Inf>
 
-                        </S.ProfileSeller>
-                </S.MainProfile>
+                <S.SellerButton
+                  onClick={() => {
+                    setShow(!show);
+                  }}
+                >
+                  {show ? `Скрыть   телефон` : `Показать    телефон`}
+                  <S.SellerButtonSpan>
+                    {show ? user?.phone : "X XXX XXX XX XX"}
+                  </S.SellerButtonSpan>
+                </S.SellerButton>
+              </S.SellerRight>
+            </S.ProfileSeller>
+          </S.MainProfile>
 
-                <S.MainTitle>Мои товары</S.MainTitle>
-                <S.MainContent>
-                        <S.MainCards>
-
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-
-                        </S.MainCards>
-                    </S.MainContent>
-            </S.MainContainer>
-        </main>
-   </S.Container>
-    )
-}
+          <S.MainTitle>Товары продавца</S.MainTitle>
+          <S.MainContent>
+            <S.MainCards>
+              {
+              // eslint-disable-next-line
+              allAds.map((ad) => {
+                if (user?.id === ad?.user.id){
+                  return <Advertisement 
+                  images={ad.images} 
+                  title={ad.title} 
+                  price={ad.price} 
+                  city={ad.city} 
+                  released={ad.created_on} 
+                  id={ad.id}
+                  />
+                }
+              })
+                }
+            </S.MainCards>
+          </S.MainContent>
+        </S.MainContainer>
+      </main>
+    </S.Container>
+  );
+};

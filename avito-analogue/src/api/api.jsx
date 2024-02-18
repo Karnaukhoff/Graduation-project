@@ -75,3 +75,13 @@ export async function getAd(id){
       const ad = await response.json();
       return ad;
 }
+export async function getUser(id){
+  const response = await fetch(
+      `${baseURL}/user/${id}`
+  );
+  if (!response.ok) {
+      throw new Error("Ошибка сервера");
+    }
+    const user = await response.json();
+    return user;
+}

@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllAds } from "../api/api";
 import { setAllAds } from "../store/slices/adSlice";
 import Header from "../components/Header/Header";
+import { useNavigate } from "react-router-dom";
 
 export const Main = () => {
   const allAds = useSelector((state) => state.advertisement.all);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (
@@ -29,12 +31,11 @@ export const Main = () => {
       </S.Header>
       <main>
         <S.MainSearch>
-          <S.SearchLogoLink to="/">
+          <S.SearchLogoLink onClick={() => {
+            navigate("/")
+          }}>
             <S.SearchLogoIMG src="/img/logo.png" alt="logo" />
           </S.SearchLogoLink>
-          <S.SearchLogoLinkMob to="/">
-            <S.SearchLogoIMGMob src="/img/logo-mob.png" alt="logo" />
-          </S.SearchLogoLinkMob>
           <S.SearchForm>
             <S.SearchText
               type="search"

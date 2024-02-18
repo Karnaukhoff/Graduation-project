@@ -59,7 +59,12 @@ export const SellerImg = styled.div`
     background-color: #F0F0F0;
 `;
 export const SellerImgLink = styled.a``;
-export const SellerImgPhoto = styled.img``;
+export const SellerImgPhoto = styled.img`
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background-color: #F0F0F0;
+    `;
 export const SellerRight = styled.div`
     width: auto;
 `;
@@ -116,11 +121,10 @@ export const MainCards = styled.div`
     -ms-grid-columns: (270px)[4];
         grid-template-columns: repeat(4, 270px);
     grid-auto-rows: 441px;
-    grid-gap: 40px 26px;
+    grid-gap: 80px 26px;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    overflow-y: auto;
     scrollbar-color: #FFFFFF #2E2E2E;
     scrollbar-width: thin;
     scrollbar-width: 0px;

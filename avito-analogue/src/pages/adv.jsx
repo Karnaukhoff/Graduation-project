@@ -4,10 +4,12 @@ import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import { getAd } from "../api/api";
 import { dateFormat, priceFormat, sellsFrom } from "../usefulFunctions";
+import { useNavigate } from "react-router-dom";
 
 export const Advertisement = () => {
   const [ad, setAd] = useState(null);
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
@@ -96,7 +98,10 @@ export const Advertisement = () => {
                     {show ? ad?.user.phone : "X XXX XXX XX XX"}
                   </S.ArticButtonSpan>
                 </S.ArticButton>
-                <S.ArticleAuthor>
+                <S.ArticleAuthor onClick={() => {
+                  localStorage.setItem("userId", JSON.stringify(ad.user.id))
+                  navigate(`../seller/${ad.user.id}`);
+                }}>
                   <S.AuthorImg>
                     <S.AuthorImgPicture
                       src={`http://localhost:8090/${ad?.user.avatar}`}

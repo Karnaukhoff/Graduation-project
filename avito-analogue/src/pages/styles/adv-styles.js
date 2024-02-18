@@ -163,13 +163,18 @@ export const ArticleAuthor = styled.div`
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
+  width: 345px;
+  &:hover{
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.25);
+    border-radius: 60px;
+  }
 `;
 export const AuthorImg = styled.div`
   width: 40px;
   height: 40px;
   background-color: #f0f0f0;
   border-radius: 50%;
-  margin-top: 16px;
+  margin-top: 30px;
 `;
 export const AuthorImgPicture = styled.img`
   width: 100%;
@@ -177,6 +182,7 @@ export const AuthorImgPicture = styled.img`
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
+  border-radius: 30px;
 `;
 export const AuthorContent = styled.div`
   margin-left: 12px;
