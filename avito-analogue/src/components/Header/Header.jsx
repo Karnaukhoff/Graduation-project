@@ -2,7 +2,7 @@ import * as S from "./Header-styles";
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../../store/slices/userSlice";
+import { setToken, setUser } from "../../store/slices/userSlice";
 
 function Header({page}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -94,6 +94,8 @@ function Header({page}) {
         <S.HeaderBtnMainEnter onClick={() => {
           localStorage.setItem("authData", JSON.stringify(null))
           dispatch(setUser(null))
+          localStorage.setItem("token", JSON.stringify(null))
+          dispatch(setToken(null))
           window.location.href = "/register"
         }}>Выйти</S.HeaderBtnMainEnter>
         :

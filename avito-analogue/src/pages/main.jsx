@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import * as S from "./styles/main-styles";
 import Advertisement from "../components/Advertisement/Advertisement";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAds } from "../api/api";
+import { getAllAds, getUser } from "../api/api";
 import { setAllAds, setFilteredAds } from "../store/slices/adSlice";
 import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 
 export const Main = () => {
   const allAds = useSelector((state) => state.advertisement.all);
+  const token = useSelector((state) => state.user.token);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export const Main = () => {
     e.preventDefault()
     dispatch(setFilteredAds(search))
   }
+  getUser(token).then((user) => console.log(user))
   return (
     <S.Container>
       <S.Header>

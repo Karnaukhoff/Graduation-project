@@ -43,6 +43,7 @@ export function Authorization() {
             }
           })
         })
+        localStorage.setItem("token", JSON.stringify(userToken))
         dispatch(setToken(userToken))
         navigate("/")
         })

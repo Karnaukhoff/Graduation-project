@@ -75,13 +75,41 @@ export async function getAd(id){
       const ad = await response.json();
       return ad;
 }
-export async function getUser(id){
+export async function getUser(token){
   const response = await fetch(
-      `${baseURL}/user/${id}`
+      `${baseURL}/user`,
+      { 
+        headers: { Authorization: `Bearer ${token.access_token}` }, 
+      }
   );
   if (!response.ok) {
+    console.log(response);
       throw new Error("Ошибка сервера");
     }
     const user = await response.json();
     return user;
+}
+export async function updateUserData({ email, password, name, surname, city, id }) {
+  const response = await fetch(
+      `${baseURL}/user/${id}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        name: name,
+        surname: surname,
+        city: city,
+        role: "user",
+      }),
+      headers: {
+        "content-type": "application/json",
+      },
+    }
+  );
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  const user = await response.json();
+  return user;
 }

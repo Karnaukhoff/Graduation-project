@@ -4,7 +4,7 @@ import Header from "../components/Header/Header";
 import  MainMenu  from "../components/MainMenu/MainMenu";
 import Advertisement from "../components/Advertisement/Advertisement";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAds } from "../api/api";
+import { getAllAds, updateUserData } from "../api/api";
 import { setAllAds } from "../store/slices/adSlice";
 
 export const Profile = () => {
@@ -15,14 +15,16 @@ export const Profile = () => {
         surname: "",
         city: "",
         phone: "",
+        email: "",
     })
     const dispatch = useDispatch()
     useEffect(() => {
         setDataProfile({
-            name: user.name,
-            surname: user.surname,
-            city: user.city,
-            phone: user.phone
+            name: user?.name,
+            surname: user?.surname,
+            city: user?.city,
+            phone: user?.phone,
+            email: user?.email
         })
     }, [user])
 
@@ -86,11 +88,15 @@ export const Profile = () => {
                                         <S.SettingsOption value={dataProfile.city} name="city" onChange={(e) => onChangeInput(e.target)}/>
                                     </S.SettingsDiv>
                                     <S.SettingsDiv>
+                                        <S.SettingsLabel for="email">Почта</S.SettingsLabel>
+                                        <S.SettingsOption value={dataProfile.email} name="email" onChange={(e) => onChangeInput(e.target)}/>
+                                    </S.SettingsDiv>
+                                    <S.SettingsDiv>
                                         <S.SettingsLabel for="phone">Телефон</S.SettingsLabel> 
                                         <S.SettingsOptionPhone value={dataProfile.phone} name="phone" onChange={(e) => onChangeInput(e.target)}/>
                                     </S.SettingsDiv>
 
-                                    <S.SettingsBtn>Сохранить</S.SettingsBtn>
+                                    <S.SettingsBtn onClick={() => updateUserData({})}>Сохранить</S.SettingsBtn>
                                 </S.SettingsForm>
                             </S.SettingsRight>
 
