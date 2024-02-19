@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./styles/main-styles";
 import Advertisement from "../components/Advertisement/Advertisement";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllAds } from "../api/api";
-import { setAllAds } from "../store/slices/adSlice";
+import { setAllAds, setFilteredAds } from "../store/slices/adSlice";
 import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 
 export const Main = () => {
   const allAds = useSelector((state) => state.advertisement.all);
+  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,11 +23,15 @@ export const Main = () => {
     )()
     // eslint-disable-next-line
   }, [])
+  function submitSearch(e){
+    e.preventDefault()
+    dispatch(setFilteredAds(search))
+  }
   return (
     <S.Container>
       <S.Header>
         <S.HeaderNav>
-          <Header />
+          <Header page={"main"}/>
         </S.HeaderNav>
       </S.Header>
       <main>
@@ -41,13 +46,10 @@ export const Main = () => {
               type="search"
               placeholder="Поиск по объявлениям"
               name="search"
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
             />
-            <S.SearchTextMob
-              type="search"
-              placeholder="Поиск по объявлениям"
-              name="search"
-            />
-            <S.SearchBtn>Найти</S.SearchBtn>
+            <S.SearchBtn onClick={submitSearch}>Найти</S.SearchBtn>
           </S.SearchForm>
         </S.MainSearch>
         <S.MainContainer>

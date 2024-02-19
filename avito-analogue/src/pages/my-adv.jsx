@@ -165,7 +165,7 @@ export const MyAdvertisement = () => {
 
     return(
         <S.Container>
-            <Header />
+            <Header page={"my-adv"}/>
             <main>
                 <S.MainContainer>
                     <MainMenu />

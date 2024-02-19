@@ -1,18 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./styles/profile-styles"
 import Header from "../components/Header/Header";
 import  MainMenu  from "../components/MainMenu/MainMenu";
 import Advertisement from "../components/Advertisement/Advertisement";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllAds } from "../api/api";
+import { setAllAds } from "../store/slices/adSlice";
 
 export const Profile = () => {
+    const user = useSelector((state) => state.user.user);
+    const allAds = useSelector((state) => state.advertisement.all);
+    const [dataProfile, setDataProfile] = useState({
+        name: "",
+        surname: "",
+        city: "",
+        phone: "",
+    })
+    const dispatch = useDispatch()
+    useEffect(() => {
+        setDataProfile({
+            name: user.name,
+            surname: user.surname,
+            city: user.city,
+            phone: user.phone
+        })
+    }, [user])
+
+    useEffect(() => {
+        (
+          async () => {
+            await getAllAds().then((ads) => {
+              dispatch(setAllAds(ads))
+            });
+          }
+        )()
+        // eslint-disable-next-line
+      }, [])
+      function onChangeInput(e){
+        setDataProfile({...dataProfile, [e.name]: e.value})
+      }
+
     return(
     <S.Container>
-        <Header />
+        <Header page={"profile"}/>
         <main>
             <S.MainContainer>
                 <MainMenu />
-
-                <S.MainHeader>Здравствуйте, Максим!</S.MainHeader>
+                
+                {user?.name ? 
+                <S.MainHeader>Здравствуйте, {user?.name}!</S.MainHeader>
+                :
+                null
+                }
+                
                 <S.MainProfile>
                     <S.ProfileContent>
                         <S.ProfileTitle>Настройки профиля</S.ProfileTitle>
@@ -21,29 +61,33 @@ export const Profile = () => {
                             <S.SettingsLeft>
                                 <S.SettingsImg>
                                     <S.SettingImgLink>
-                                        <S.SettingImgPhoto />
+                                        <S.SettingImgPhoto src={`http://localhost:8090/${user?.avatar}`}/>
                                     </S.SettingImgLink>
                                 </S.SettingsImg>
+                                {user?.avatar ? 
                                 <S.SettingsChangePhoto>Заменить</S.SettingsChangePhoto>
+                                :
+                                <S.SettingsChangePhoto>Добавить</S.SettingsChangePhoto>
+                                }
                             </S.SettingsLeft>
                             <S.SettingsRight>
                                 <S.SettingsForm>
 
                                     <S.SettingsDiv>
                                         <S.SettingsLabel for="fname">Имя</S.SettingsLabel>
-                                        <S.SettingsOption placeholder="" />
+                                        <S.SettingsOption value={dataProfile.name} name="name" onChange={(e) => onChangeInput(e.target)}/>
                                     </S.SettingsDiv>
                                     <S.SettingsDiv>
                                         <S.SettingsLabel for="lname">Фамилия</S.SettingsLabel>
-                                        <S.SettingsOption placeholder="" />
+                                        <S.SettingsOption value={dataProfile.surname} name="surname" onChange={(e) => onChangeInput(e.target)}/>
                                     </S.SettingsDiv>
                                     <S.SettingsDiv>
                                         <S.SettingsLabel for="city">Город</S.SettingsLabel>
-                                        <S.SettingsOption placeholder="" />
+                                        <S.SettingsOption value={dataProfile.city} name="city" onChange={(e) => onChangeInput(e.target)}/>
                                     </S.SettingsDiv>
                                     <S.SettingsDiv>
                                         <S.SettingsLabel for="phone">Телефон</S.SettingsLabel> 
-                                        <S.SettingsOptionPhone placeholder="" />
+                                        <S.SettingsOptionPhone value={dataProfile.phone} name="phone" onChange={(e) => onChangeInput(e.target)}/>
                                     </S.SettingsDiv>
 
                                     <S.SettingsBtn>Сохранить</S.SettingsBtn>
@@ -57,16 +101,21 @@ export const Profile = () => {
                 <S.MainTitle>Мои товары</S.MainTitle>
                 <S.MainContent>
                         <S.MainCards>
-
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-                            <Advertisement />
-
+                        {
+                            // eslint-disable-next-line
+                            allAds.map((ad) => {
+                                if (user?.id === ad?.user.id){
+                                return <Advertisement 
+                                images={ad.images} 
+                                title={ad.title} 
+                                price={ad.price} 
+                                city={ad.city} 
+                                released={ad.created_on} 
+                                id={ad.id}
+                                />
+                                }
+                            })
+                        }
                         </S.MainCards>
                     </S.MainContent>
             </S.MainContainer>

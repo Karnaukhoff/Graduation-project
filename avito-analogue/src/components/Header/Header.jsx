@@ -1,11 +1,13 @@
 import * as S from "./Header-styles";
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../store/slices/userSlice";
 
-function Header() {
+function Header({page}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const user = useSelector((state) => state.user.user)
+  const dispatch=  useDispatch();
+  const user = useSelector((state) => state.user.user);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -88,7 +90,15 @@ function Header() {
         }>
           {modalContent}
         </Modal>
-        <S.HeaderBtnMainEnter>Личный кабинет</S.HeaderBtnMainEnter>
+        {page === "profile" ? 
+        <S.HeaderBtnMainEnter onClick={() => {
+          localStorage.setItem("authData", JSON.stringify(null))
+          dispatch(setUser(null))
+          window.location.href = "/register"
+        }}>Выйти</S.HeaderBtnMainEnter>
+        :
+        <S.HeaderBtnMainEnter onClick={() => (window.location.href = "/profile")}>Личный кабинет</S.HeaderBtnMainEnter>
+        }
         </>
          :           
         <S.HeaderBtnMainEnter

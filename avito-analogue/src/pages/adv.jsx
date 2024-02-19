@@ -19,7 +19,7 @@ export const Advertisement = () => {
   //Отзывы
   return (
     <S.Container>
-      <Header />
+      <Header page={"adv"}/>
       <main>
         <S.MainContainer>
           <MainMenu />

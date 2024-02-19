@@ -59,7 +59,12 @@ export const SettingsImg = styled.div`
     background-color: #F0F0F0;
 `;
 export const SettingImgLink = styled.a``;
-export const SettingImgPhoto = styled.img``;
+export const SettingImgPhoto = styled.img`
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background-color: #F0F0F0;
+`;
 export const SettingsChangePhoto = styled.a`
     margin-top: 10px;
     margin-bottom: 30px;

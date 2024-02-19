@@ -36,7 +36,7 @@ export const Seller = () => {
 
   return (
     <S.Container>
-      <Header />
+      <Header page={"seller"}/>
       <main>
         <S.MainContainer>
           <MainMenu />
