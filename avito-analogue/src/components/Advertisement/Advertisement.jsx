@@ -34,10 +34,3 @@ function Advertisement({ images, title, price, city, released, id }) {
   );
 }
 export default Advertisement;
-/*
-            {
-              images.length > 0 ? images.map((item) => {
-                return <S.AdvPhoto src={`http://localhost:8090/${item.url}`} />
-              }) : <S.AdvPhoto src="" />
-            }
-*/

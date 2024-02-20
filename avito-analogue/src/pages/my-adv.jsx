@@ -3,10 +3,12 @@ import Modal from "react-modal";
 import * as S from "./styles/my-adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
+import { useSelector } from "react-redux";
 
 export const MyAdvertisement = () => {
     const [modalIsOpenEdit, setModalIsOpenEdit] = useState(false);
     const [modalIsOpenReview, setModalIsOpenReview] = useState(false);
+    const user = useSelector((state) => state.user.user)
 
     const openModalEdit = () => {
       setModalIsOpenEdit(true);
@@ -83,80 +85,18 @@ export const MyAdvertisement = () => {
                 <S.ModalAddReviewlabel>Добавить отзыв</S.ModalAddReviewlabel>
                 <S.ModalAddReviewTextear cols="auto" rows="5" placeholder="Введите описание"></S.ModalAddReviewTextear>
             </S.ModalAddReviewNewArtBlock>
+
+            {user ? 
             <S.ModalAddReviewButton>Опубликовать</S.ModalAddReviewButton>
+            :
+            <S.ModalAddReviewButtonDisabled disabled={true}>Опубликовать</S.ModalAddReviewButtonDisabled>
+            }
+            
         </S.ModalAddReviewForm>
         <S.ModalReviews>
 
-            <S.Review>
-                <S.ReviewItem>
-                    <S.ReviewLeft>
-                        <S.ReviewImg>
-                            <S.ReviewImgPicture src="" alt=""/>
-                        </S.ReviewImg>
-                    </S.ReviewLeft>
-                    <S.ReviewRight>
-                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
-                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
-                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
-                    </S.ReviewRight>
-                </S.ReviewItem>
-            </S.Review>
-            <S.Review>
-                <S.ReviewItem>
-                    <S.ReviewLeft>
-                        <S.ReviewImg>
-                            <S.ReviewImgPicture src="" alt=""/>
-                        </S.ReviewImg>
-                    </S.ReviewLeft>
-                    <S.ReviewRight>
-                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
-                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
-                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
-                    </S.ReviewRight>
-                </S.ReviewItem>
-            </S.Review>
-            <S.Review>
-                <S.ReviewItem>
-                    <S.ReviewLeft>
-                        <S.ReviewImg>
-                            <S.ReviewImgPicture src="" alt=""/>
-                        </S.ReviewImg>
-                    </S.ReviewLeft>
-                    <S.ReviewRight>
-                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
-                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
-                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
-                    </S.ReviewRight>
-                </S.ReviewItem>
-            </S.Review>
-            <S.Review>
-                <S.ReviewItem>
-                    <S.ReviewLeft>
-                        <S.ReviewImg>
-                            <S.ReviewImgPicture src="" alt=""/>
-                        </S.ReviewImg>
-                    </S.ReviewLeft>
-                    <S.ReviewRight>
-                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
-                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
-                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
-                    </S.ReviewRight>
-                </S.ReviewItem>
-            </S.Review>
-            <S.Review>
-                <S.ReviewItem>
-                    <S.ReviewLeft>
-                        <S.ReviewImg>
-                            <S.ReviewImgPicture src="" alt=""/>
-                        </S.ReviewImg>
-                    </S.ReviewLeft>
-                    <S.ReviewRight>
-                        <S.ReviewName>Олег <S.ReviewNameSpan>14 августа</S.ReviewNameSpan></S.ReviewName>
-                        <S.ReviewTitle>Комментарий</S.ReviewTitle>
-                        <S.ReviewText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</S.ReviewText>
-                    </S.ReviewRight>
-                </S.ReviewItem>
-            </S.Review>
+            {/**Review */}
+            
 
         </S.ModalReviews>
         </>

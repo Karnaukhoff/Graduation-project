@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 export const Advertisement = () => {
   const [ad, setAd] = useState(null);
   const [show, setShow] = useState(false);
+  //const [comments, setComments] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {

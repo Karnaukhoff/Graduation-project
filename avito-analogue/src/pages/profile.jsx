@@ -4,12 +4,13 @@ import Header from "../components/Header/Header";
 import  MainMenu  from "../components/MainMenu/MainMenu";
 import Advertisement from "../components/Advertisement/Advertisement";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAds, updateUserData } from "../api/api";
+import { getAllAds, /*getUser,*/ updateUserData } from "../api/api";
 import { setAllAds } from "../store/slices/adSlice";
 
 export const Profile = () => {
     const user = useSelector((state) => state.user.user);
     const allAds = useSelector((state) => state.advertisement.all);
+    //const token = useSelector((state) => state.user.token);
     const [dataProfile, setDataProfile] = useState({
         name: "",
         surname: "",
@@ -41,7 +42,7 @@ export const Profile = () => {
       function onChangeInput(e){
         setDataProfile({...dataProfile, [e.name]: e.value})
       }
-
+    //getUser(token).then((user) => console.log(user));
     return(
     <S.Container>
         <Header page={"profile"}/>
@@ -96,7 +97,7 @@ export const Profile = () => {
                                         <S.SettingsOptionPhone value={dataProfile.phone} name="phone" onChange={(e) => onChangeInput(e.target)}/>
                                     </S.SettingsDiv>
 
-                                    <S.SettingsBtn onClick={() => updateUserData({})}>Сохранить</S.SettingsBtn>
+                                    <S.SettingsBtn onClick={() => updateUserData(dataProfile.email, user.password, dataProfile.name, dataProfile.surname, dataProfile.city)}>Сохранить</S.SettingsBtn>
                                 </S.SettingsForm>
                             </S.SettingsRight>
 
