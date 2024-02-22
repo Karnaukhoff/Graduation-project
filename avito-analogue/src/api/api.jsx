@@ -78,8 +78,7 @@ async function updateToken({access, refresh}){
   console.log(access, refresh)
   const response = await fetch(`${baseURL}/auth/login`, {
     method: "PUT",
-    headers: { 
-      Authorization: `Bearer ${access}`,
+    headers: {
       "content-type": "application/json",
    },
     body: JSON.stringify({
@@ -118,23 +117,16 @@ export async function updateUserData(email, name, surname, city, phone, token, c
       "content-type": "application/json",
     },
   });
+  console.log(response);
   if (response.status === 500) {
     throw new Error("Сервер не отвечает");
   }
-  if (response.status === 401){
-    /*console.log(token.access_token, token.refresh_token);
-    const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
-    const responseData = await updateUserData(email, name, surname, city, phone, newToken)
-    const user = await responseData.json();
-    return user;*/
-    logIn({email: currentUser.email, password: JSON.parse(localStorage.getItem("password"))}).then((newToken) => {
-      console.log(currentUser, newToken);
-      localStorage.setItem("token", JSON.stringify(newToken))
-      updateUserData(email, name, surname, city, phone, newToken)
-    })
-  }
+   if (response.status === 401){
+     console.log(token.access_token, token.refresh_token);
+     const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
+     await updateUserData(email, name, surname, city, phone, newToken, currentUser)
+   }
   const user = await response.json();
-  localStorage.setItem("authData", JSON.stringify(user))
   return user;
 }
 export async function getComments() {
