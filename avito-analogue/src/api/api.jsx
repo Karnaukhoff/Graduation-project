@@ -74,26 +74,67 @@ export async function getUser(token) {
   const user = await response.json();
   return user;
 }
-export async function updateUserData(email, password, name, surname, city) {
-  console.log(email, password, name, surname, city);
+async function updateToken({access, refresh}){
+  console.log(access, refresh)
+  const response = await fetch(`${baseURL}/auth/login`, {
+    method: "PUT",
+    headers: { 
+      Authorization: `Bearer ${access}`,
+      "content-type": "application/json",
+   },
+    body: JSON.stringify({
+      access_token: access,
+      refresh_token: refresh
+    })
+  });
+  if (response.status === 201) {
+    const tokens = await response.json();
+    localStorage.setItem("token", JSON.stringify(tokens))
+    return tokens;
+  }
+  else if (response.status === 401) {
+    throw new Error("Токен устарел");
+  }
+  else {
+    console.log(response);
+    throw new Error("Ошибка сервера");
+  }
+
+}
+export async function updateUserData(email, name, surname, city, phone, token, currentUser) {
+  console.log(email, name, surname, city, token);
   const response = await fetch(`${baseURL}/user`, {
     method: "PATCH",
     body: JSON.stringify({
       email: email,
-      password: password,
       name: name,
       surname: surname,
       city: city,
+      phone: phone,
       role: "user",
     }),
     headers: {
+      Authorization: `Bearer ${token.access_token}`,
       "content-type": "application/json",
     },
   });
   if (response.status === 500) {
     throw new Error("Сервер не отвечает");
   }
+  if (response.status === 401){
+    /*console.log(token.access_token, token.refresh_token);
+    const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
+    const responseData = await updateUserData(email, name, surname, city, phone, newToken)
+    const user = await responseData.json();
+    return user;*/
+    logIn({email: currentUser.email, password: JSON.parse(localStorage.getItem("password"))}).then((newToken) => {
+      console.log(currentUser, newToken);
+      localStorage.setItem("token", JSON.stringify(newToken))
+      updateUserData(email, name, surname, city, phone, newToken)
+    })
+  }
   const user = await response.json();
+  localStorage.setItem("authData", JSON.stringify(user))
   return user;
 }
 export async function getComments() {

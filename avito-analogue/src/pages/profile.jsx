@@ -4,13 +4,14 @@ import Header from "../components/Header/Header";
 import  MainMenu  from "../components/MainMenu/MainMenu";
 import Advertisement from "../components/Advertisement/Advertisement";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAds, /*getUser,*/ updateUserData } from "../api/api";
+import { getAllAds, getUser, updateUserData } from "../api/api";
 import { setAllAds } from "../store/slices/adSlice";
+import { setToken, setUser } from "../store/slices/userSlice";
 
 export const Profile = () => {
     const user = useSelector((state) => state.user.user);
     const allAds = useSelector((state) => state.advertisement.all);
-    //const token = useSelector((state) => state.user.token);
+    const token = useSelector((state) => state.user.token);
     const [dataProfile, setDataProfile] = useState({
         name: "",
         surname: "",
@@ -39,9 +40,25 @@ export const Profile = () => {
         )()
         // eslint-disable-next-line
       }, [])
+    /*useEffect(() => {
+        dispatch(setUser(JSON.parse(localStorage.getItem("authData"))))
+        // eslint-disable-next-line
+    }, [user])*/
       function onChangeInput(e){
         setDataProfile({...dataProfile, [e.name]: e.value})
       }
+      function updateData(event){
+        event.preventDefault()
+        updateUserData(dataProfile.email, dataProfile.name, dataProfile.surname, dataProfile.city, dataProfile.phone, token, user).then((item) => {
+            console.log(item);
+            dispatch(setUser(JSON.parse(localStorage.getItem("authData"))))
+            dispatch(setToken(JSON.parse(localStorage.getItem("token"))))
+        })
+      }
+      /*if (user.detail === "Could not validate credentials: Signature has expired"){ 
+        dispatch(setUser(JSON.parse(localStorage.getItem("authData"))))
+        console.log("Could not validate credentials: Signature has expired");
+    }*/
     //getUser(token).then((user) => console.log(user));
     return(
     <S.Container>
@@ -97,7 +114,7 @@ export const Profile = () => {
                                         <S.SettingsOptionPhone value={dataProfile.phone} name="phone" onChange={(e) => onChangeInput(e.target)}/>
                                     </S.SettingsDiv>
 
-                                    <S.SettingsBtn onClick={() => updateUserData(dataProfile.email, user.password, dataProfile.name, dataProfile.surname, dataProfile.city)}>Сохранить</S.SettingsBtn>
+                                    <S.SettingsBtn onClick={updateData}>Сохранить</S.SettingsBtn>
                                 </S.SettingsForm>
                             </S.SettingsRight>
 

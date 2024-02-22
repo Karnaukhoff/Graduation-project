@@ -92,9 +92,9 @@ function Header({page}) {
         </Modal>
         {page === "profile" ? 
         <S.HeaderBtnMainEnter onClick={() => {
-          localStorage.setItem("authData", JSON.stringify(null))
+          localStorage.removeItem("authData")
           dispatch(setUser(null))
-          localStorage.setItem("token", JSON.stringify(null))
+          localStorage.removeItem("token")
           dispatch(setToken(null))
           window.location.href = "/register"
         }}>Выйти</S.HeaderBtnMainEnter>

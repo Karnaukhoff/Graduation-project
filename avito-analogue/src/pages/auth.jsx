@@ -34,6 +34,11 @@ export function Authorization() {
       
       logIn({email, password})
       .then((userToken) => {
+        if (userToken?.detail === "Incorrect password"){
+          setError("Неверный пароль")
+          setLoading(false)
+          return
+        }
         getAllUsers().then((users) => {
           // eslint-disable-next-line
           users.map((user) => {
@@ -44,6 +49,7 @@ export function Authorization() {
           })
         })
         localStorage.setItem("token", JSON.stringify(userToken))
+        localStorage.setItem("password", JSON.stringify(password))
         dispatch(setToken(userToken))
         navigate("/")
         })
