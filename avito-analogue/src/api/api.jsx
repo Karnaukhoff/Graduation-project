@@ -75,7 +75,7 @@ export async function getUser(token) {
   return user;
 }
 async function updateToken({access, refresh}){
-  console.log(access, refresh)
+  console.log("updateToken works", access, refresh)
   const response = await fetch(`${baseURL}/auth/login`, {
     method: "PUT",
     headers: {
@@ -121,13 +121,16 @@ export async function updateUserData(email, name, surname, city, phone, token, c
   if (response.status === 500) {
     throw new Error("Сервер не отвечает");
   }
+   if (response.status === 200) {
+     const user = await response.json();
+     return user;
+   }
    if (response.status === 401){
      console.log(token.access_token, token.refresh_token);
      const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
-     await updateUserData(email, name, surname, city, phone, newToken, currentUser)
+     console.log(newToken);
+     return newToken;
    }
-  const user = await response.json();
-  return user;
 }
 export async function getComments() {
   const response = await fetch(`${baseURL}/comments`);

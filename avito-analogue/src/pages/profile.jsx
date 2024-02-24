@@ -53,8 +53,26 @@ export const Profile = () => {
       token,
       user
     ).then((item) => {
-      dispatch(setUser(item));
-      dispatch(setToken(JSON.parse(localStorage.getItem("token"))));
+      console.log(item);
+      if (item?.id !== (JSON.parse(localStorage.getItem("authData"))).id){
+        console.log("recall works");
+        dispatch(setToken(item));
+        updateUserData(
+          dataProfile.email,
+          dataProfile.name,
+          dataProfile.surname,
+          dataProfile.city,
+          dataProfile.phone,
+          item,
+          user
+        ).then((newItem) => {
+          dispatch(setUser(newItem));
+        })
+      }
+      else {
+        dispatch(setUser(item));
+        dispatch(setToken(JSON.parse(localStorage.getItem("token"))));
+      }
     });
   }
 
