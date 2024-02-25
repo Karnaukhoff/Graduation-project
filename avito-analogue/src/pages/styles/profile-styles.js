@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { Link, NavLink } from "react-router-dom";
 
 export const Container = styled.div`
     width: 100%;
@@ -65,13 +66,25 @@ export const SettingImgPhoto = styled.img`
     border-radius: 50%;
     background-color: #F0F0F0;
 `;
-export const SettingsChangePhoto = styled.a`
+export const AddAvatarBlock = styled.div`
+    width: 100%;
+    position: relative;
+    margin: 15px 0;
+    text-align: center;
+`;
+export const AddAvatarInput = styled.input`
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+`
+export const SettingsChangePhoto = styled.label`
     margin-top: 10px;
     margin-bottom: 30px;
     text-decoration: none;
     font-size: 16px;
     line-height: 24px;
     color: #009EE4;
+    width: 135px;
 `;
 export const SettingsRight = styled.div`
     width: 630px;
@@ -179,7 +192,6 @@ export const MainCards = styled.div`
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    overflow-y: auto;
     scrollbar-color: #FFFFFF #2E2E2E;
     scrollbar-width: thin;
     scrollbar-width: 0px;

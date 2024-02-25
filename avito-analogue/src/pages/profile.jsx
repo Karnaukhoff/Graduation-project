@@ -4,7 +4,7 @@ import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import Advertisement from "../components/Advertisement/Advertisement";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAds, updateUserData } from "../api/api";
+import { getAllAds, postAvatar, updateUserData } from "../api/api";
 import { setAllAds } from "../store/slices/adSlice";
 import { setToken, setUser } from "../store/slices/userSlice";
 
@@ -54,7 +54,7 @@ export const Profile = () => {
       user
     ).then((item) => {
       console.log(item);
-      if (item?.id !== (JSON.parse(localStorage.getItem("authData"))).id){
+      if (item?.id !== JSON.parse(localStorage.getItem("authData")).id) {
         console.log("recall works");
         dispatch(setToken(item));
         updateUserData(
@@ -67,14 +67,34 @@ export const Profile = () => {
           user
         ).then((newItem) => {
           dispatch(setUser(newItem));
-        })
-      }
-      else {
+        });
+      } else {
         dispatch(setUser(item));
         dispatch(setToken(JSON.parse(localStorage.getItem("token"))));
       }
     });
   }
+  const UploadAvatar = (event) => {
+    event.preventDefault();
+    if (event.target.files[0]) {
+      //отправить фото на сервер
+      console.log(event.target.files[0]);
+      postAvatar({avatar: event.target.files[0], token: token}).then((item) => {
+        console.log(item);
+        if (item?.id !== JSON.parse(localStorage.getItem("authData")).id){
+          console.log("recall works");
+          dispatch(setToken(item))
+          postAvatar({avatar: event.target.files[0], token: item}).then((newItem) => {
+            dispatch(setUser(newItem))
+          })
+        }
+        else {
+          localStorage.setItem("authData", JSON.stringify(item))
+          dispatch(setUser(item))
+        }
+      })
+    }
+  };
 
   return (
     <S.Container>
@@ -100,9 +120,20 @@ export const Profile = () => {
                     </S.SettingImgLink>
                   </S.SettingsImg>
                   {user?.avatar ? (
-                    <S.SettingsChangePhoto>Заменить</S.SettingsChangePhoto>
+
+                    //заменить
+                    <S.AddAvatarBlock>
+                      <S.AddAvatarInput type="file" onChange={UploadAvatar} id="input__file" multiple/>
+                      <S.SettingsChangePhoto for="input__file">Заменить</S.SettingsChangePhoto>
+                    </S.AddAvatarBlock>
+
                   ) : (
-                    <S.SettingsChangePhoto>Добавить</S.SettingsChangePhoto>
+
+                    //добавить
+                    <S.AddAvatarBlock>
+                      <S.AddAvatarInput type="file" onChange={UploadAvatar} multiple/>
+                      <S.SettingsChangePhoto>Добавить</S.SettingsChangePhoto>
+                    </S.AddAvatarBlock>
                   )}
                 </S.SettingsLeft>
                 <S.SettingsRight>

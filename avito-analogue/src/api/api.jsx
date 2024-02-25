@@ -140,3 +140,29 @@ export async function getComments() {
   const data = await response.json();
   return data;
 }
+export async function postAvatar({avatar, token}){
+  const data = new FormData();
+  data.append("file", avatar);
+  const response = await fetch(`${baseURL}/user/avatar`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token.access_token}`
+    },
+    body: data,
+  });
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+  if (response.status === 401){
+    console.log(token.access_token, token.refresh_token);
+    const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
+    console.log(newToken);
+    return newToken;
+  }
+  const result = await response.json();
+  return result;
+}
