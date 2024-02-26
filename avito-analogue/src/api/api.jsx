@@ -166,3 +166,35 @@ export async function postAvatar({avatar, token}){
   const result = await response.json();
   return result;
 }
+// /ads
+export async function postAdWithPhoto({title, description, price, photos, token}){
+  const response = await fetch(`${baseURL}/ads`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token.access_token}`
+    },
+    body: {
+      title: title,
+      description: description,
+      price: price,
+      files: photos
+    },
+  });
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+  if (response.status === 401){
+    console.log(token.access_token, token.refresh_token);
+    const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
+    console.log(newToken);
+    return newToken;
+  }
+  const result = await response.json();
+  return result;
+}
+// /adstext
+// /ads/me

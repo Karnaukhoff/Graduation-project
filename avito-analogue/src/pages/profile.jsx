@@ -76,6 +76,7 @@ export const Profile = () => {
   }
   const UploadAvatar = (event) => {
     event.preventDefault();
+    console.log(event);
     if (event.target.files[0]) {
       //отправить фото на сервер
       console.log(event.target.files[0]);

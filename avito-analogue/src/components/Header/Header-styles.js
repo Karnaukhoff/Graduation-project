@@ -121,6 +121,9 @@ export const ModalAddPhotos = styled.div`
   margin-bottom: 10px;
   overflow: hidden;
 `;
+export const Success = styled.img`
+  width: 90px
+`;
 export const ModalAddForm = styled.div`
   width: 90px;
   height: 90px;

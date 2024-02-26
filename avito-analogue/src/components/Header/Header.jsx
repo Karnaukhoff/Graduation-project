@@ -3,9 +3,14 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../store/slices/userSlice";
+import { postAdWithPhoto } from "../../api/api";
 
 function Header({page}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState();
+  const [photos, setPhotos] = useState([]);
   const dispatch=  useDispatch();
   const user = useSelector((state) => state.user.user);
 
@@ -16,7 +21,7 @@ function Header({page}) {
   const closeModal = () => {
     setModalIsOpen(false);
   };
-
+  console.log(photos);
   const modalContent = (
     <>
     <S.ModalHeader>
@@ -25,43 +30,78 @@ function Header({page}) {
     </S.ModalHeader>
     <S.ModalTitle>
         <S.ModalTitleHeader>Название</S.ModalTitleHeader>
-        <S.ModalTitleInput placeholder="Введите название" />
+        <S.ModalTitleInput placeholder="Введите название" onChange={(event) => {setTitle(event.target.value)}}/>
     </S.ModalTitle>
     <S.ModalDescription>
         <S.ModalDescritionHeader>Описание</S.ModalDescritionHeader>
-        <S.ModalDescriptionInput placeholder="Введите описание"/>
+        <S.ModalDescriptionInput placeholder="Введите описание" onChange={(event) => {setDescription(event.target.value)}}/>
     </S.ModalDescription>
     <S.ModalPhotos>
         <S.ModalFormNewArtP>Фотографии товара <S.ModalFormNewArtSpan>не более 5 фотографий</S.ModalFormNewArtSpan></S.ModalFormNewArtP>
         <S.ModalAddPhotosBar>
           <S.ModalAddPhotos>
-              <img src="/img/add_photo.png" alt="add_photo" />
-              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+              {photos[0] === undefined 
+              ?
+              (<img src="/img/add_photo.png" alt="add_photo" />)
+              :
+              (<S.Success src="/img/success.png" alt="added_photo"/>)
+              }
+              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 0), event.target.files[0], ...photos.slice(1)])}}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-              <img src="/img/add_photo.png" alt="add_photo" />
-              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+              {photos[1] === undefined 
+              ?
+              (<img src="/img/add_photo.png" alt="add_photo" />)
+              :
+              (<S.Success src="/img/success.png" alt="added_photo"/>)
+              }
+              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 1), event.target.files[0], ...photos.slice(2)])}}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-              <img src="/img/add_photo.png" alt="add_photo" />
-              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+              {photos[2] === undefined 
+              ?
+              (<img src="/img/add_photo.png" alt="add_photo" />)
+              :
+              (<S.Success src="/img/success.png" alt="added_photo"/>)
+              }
+              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 2), event.target.files[0], ...photos.slice(3)])}}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-              <img src="/img/add_photo.png" alt="add_photo" />
-              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+              {photos[3] === undefined 
+              ?
+              (<img src="/img/add_photo.png" alt="add_photo" />)
+              :
+              (<S.Success src="/img/success.png" alt="added_photo"/>)
+              }
+              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 3), event.target.files[0], ...photos.slice(4)])}}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-              <img src="/img/add_photo.png" alt="add_photo" />
-              <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+              {photos[4] === undefined 
+              ?
+              (<img src="/img/add_photo.png" alt="add_photo" />)
+              :
+              (<S.Success src="/img/success.png" alt="added_photo"/>)
+              }
+              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 4), event.target.files[0], ...photos.slice(5)])}}/>
           </S.ModalAddPhotos>
         </S.ModalAddPhotosBar>
     </S.ModalPhotos>
     <S.ModalBlockPrice>
       <label for="price">Цена</label>
-      <S.ModalInputPrice />
+      <S.ModalInputPrice onChange={(event) => {setPrice(Number(event.target.value))}}/>
       <S.ModalInputPriceCover></S.ModalInputPriceCover>
     </S.ModalBlockPrice>
-    <S.ModalPublishButton>Опубликовать</S.ModalPublishButton>
+    <S.ModalPublishButton onClick={() => postAdWithPhoto({})
+    //api
+    //dispatch new ad list
+    //show user sells
+    //ability to update token
+    }>Опубликовать</S.ModalPublishButton>
     </>
   );
 
@@ -77,8 +117,8 @@ function Header({page}) {
         <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={
             {
                 content: {
-                    width: "600px",
-                    height: "800px",
+                    width: "620px",
+                    height: "550px",
                     inset: "unset"
                   },
                 overlay: {
