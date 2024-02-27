@@ -410,6 +410,8 @@ export const ModalPublishButton = styled.button`
   height: 46px;
   border-radius: 6px;
   border: 1px solid #D9D9D9;
+  background-color: #009EE4;
+  color: #FFFFFF;
   &:hover {
     background-color: #0080C1;
   }

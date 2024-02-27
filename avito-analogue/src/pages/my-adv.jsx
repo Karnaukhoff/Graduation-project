@@ -3,17 +3,23 @@ import Modal from "react-modal";
 import * as S from "./styles/my-adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
-import { useSelector } from "react-redux";
-import { getAd } from "../api/api";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAd, getAd, getAllAds, updateAd } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { dateFormat, priceFormat, sellsFrom } from "../usefulFunctions";
+import { setAllAds } from "../store/slices/adSlice";
 
 export const MyAdvertisement = () => {
     const [modalIsOpenEdit, setModalIsOpenEdit] = useState(false);
     const [modalIsOpenReview, setModalIsOpenReview] = useState(false);
-    const user = useSelector((state) => state.user.user)
+    const user = useSelector((state) => state.user.user);
+    const token = useSelector((state) => state.user.token);
     const [ad, setAd] = useState(null);
-    const [show, setShow] = useState(false);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [price, setPrice] = useState();
+    const [photos, setPhotos] = useState([]);
+    const dispatch = useDispatch();
     //const [comments, setComments] = useState([]);
     const navigate = useNavigate();
   
@@ -24,7 +30,10 @@ export const MyAdvertisement = () => {
     }, []);
 
     const openModalEdit = () => {
-      setModalIsOpenEdit(true);
+        setTitle(ad.title);
+        setDescription(ad.description);
+        setPrice(ad.price);
+        setModalIsOpenEdit(true);
     };
   
     const closeModalEdit = () => {
@@ -47,11 +56,11 @@ export const MyAdvertisement = () => {
       </S.ModalHeader>
       <S.ModalTitle>
           <S.ModalTitleHeader>Название</S.ModalTitleHeader>
-          <S.ModalTitleInput placeholder="Введите название" />
+          <S.ModalTitleInput placeholder="Введите название" onChange={(event) => {setTitle(event.target.value)}} value={title}/>
       </S.ModalTitle>
       <S.ModalDescription>
           <S.ModalDescritionHeader>Описание</S.ModalDescritionHeader>
-          <S.ModalDescriptionInput placeholder="Введите описание"/>
+          <S.ModalDescriptionInput placeholder="Введите описание" onChange={(event) => {setDescription(event.target.value)}} value={description}/>
       </S.ModalDescription>
       <S.ModalPhotos>
           <S.ModalFormNewArtP>Фотографии товара <S.ModalFormNewArtSpan>не более 5 фотографий</S.ModalFormNewArtSpan></S.ModalFormNewArtP>
@@ -80,10 +89,27 @@ export const MyAdvertisement = () => {
       </S.ModalPhotos>
       <S.ModalBlockPrice>
         <label for="price">Цена</label>
-        <S.ModalInputPrice />
+        <S.ModalInputPrice onChange={(event) => {setPrice(event.target.value)}} value={price}/>
         <S.ModalInputPriceCover></S.ModalInputPriceCover>
       </S.ModalBlockPrice>
-      <S.ModalPublishButton>Сохранить</S.ModalPublishButton>
+      <S.ModalPublishButton onClick={() => {
+        updateAd({id: ad.id, token: token, title: title, description: description, price: price}).then((item) => {
+            if (item?.access_token){
+                console.log("update token");
+                updateAd({id: ad.id, token: token, title: ad.title, description: ad.description, price: ad.price}).then(() => {
+                    getAllAds().then((ads) => {
+                        dispatch(setAllAds(ads))
+                        navigate(`/`)
+                    })
+                })
+            } else {
+                getAllAds().then((ads) => {
+                    dispatch(setAllAds(ads))
+                    navigate(`/`)
+                })
+            }
+        })
+      }}>Сохранить</S.ModalPublishButton>
       </>
     );
     
@@ -216,7 +242,23 @@ export const MyAdvertisement = () => {
                                     }>
                                         {modalContentEdit}
                                      </Modal>
-                                    <S.BtnRemove>Снять с публикации</S.BtnRemove>
+                                    <S.BtnRemove onClick={() => 
+                                        deleteAd({id: ad.id, token: token}).then((item) => {
+                                            if (item?.access_token){
+                                                console.log("update token");
+                                                deleteAd({id: ad.id, token: item}).then(() => {
+                                                    getAllAds().then((ads) => {
+                                                        dispatch(setAllAds(ads))
+                                                        navigate(`/`)
+                                                    })
+                                                })
+                                            } else {
+                                                getAllAds().then((ads) => {
+                                                    dispatch(setAllAds(ads))
+                                                    navigate(`/`)
+                                                })
+                                            }
+                                        })}>Снять с публикации</S.BtnRemove>
                                 </S.ArticleBtnBlock>
                                 <S.ArticleAuthor onClick={() => {
                                     localStorage.setItem("userId", JSON.stringify(ad.user.id))

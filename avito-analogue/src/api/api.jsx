@@ -226,4 +226,57 @@ export async function postAd({title, description, price, token}){
   const result = await response.json();
   return result;
 }
+export async function deleteAd({id, token}){
+  const response = await fetch(`${baseURL}/ads/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+      "content-type": "application/json",
+    },
+  });
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+  if (response.status === 401){
+    console.log(token.access_token, token.refresh_token);
+    const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
+    console.log(newToken);
+    return newToken;
+  }
+  const result = await response.json();
+  return result;
+}
+export async function updateAd({id, token, title, description, price}){
+  const response = await fetch(`${baseURL}/ads/${id}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      title: title,
+      description: description,
+      price: price,
+    }),
+  });
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+  if (response.status === 401){
+    console.log(token.access_token, token.refresh_token);
+    const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
+    console.log(newToken);
+    return newToken;
+  }
+  const result = await response.json();
+  return result;
+}
 // /ads/me
