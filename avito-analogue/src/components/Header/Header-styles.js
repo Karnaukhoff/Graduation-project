@@ -124,6 +124,9 @@ export const ModalAddPhotos = styled.div`
 export const Success = styled.img`
   width: 90px
 `;
+export const AddPhoto = styled.input`
+  display: none;
+`;
 export const ModalAddForm = styled.div`
   width: 90px;
   height: 90px;

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../../store/slices/userSlice";
-import { postAdWithPhoto } from "../../api/api";
+import { getAllAds, postAd, postAdWithPhoto } from "../../api/api";
+import { setAllAds } from "../../store/slices/adSlice";
 
 function Header({page}) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -13,6 +14,7 @@ function Header({page}) {
   const [photos, setPhotos] = useState([]);
   const dispatch=  useDispatch();
   const user = useSelector((state) => state.user.user);
+  const token = useSelector((state) => state.user.token);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -21,7 +23,7 @@ function Header({page}) {
   const closeModal = () => {
     setModalIsOpen(false);
   };
-  console.log(photos);
+
   const modalContent = (
     <>
     <S.ModalHeader>
@@ -42,51 +44,51 @@ function Header({page}) {
           <S.ModalAddPhotos>
               {photos[0] === undefined 
               ?
-              (<img src="/img/add_photo.png" alt="add_photo" />)
+              (<label for="add_photo1"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
               (<S.Success src="/img/success.png" alt="added_photo"/>)
               }
-              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+              <S.AddPhoto type="file" id="add_photo1" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 0), event.target.files[0], ...photos.slice(1)])}}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
               {photos[1] === undefined 
               ?
-              (<img src="/img/add_photo.png" alt="add_photo" />)
+              (<label for="add_photo2"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
               (<S.Success src="/img/success.png" alt="added_photo"/>)
               }
-              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+              <S.AddPhoto type="file" id="add_photo2" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 1), event.target.files[0], ...photos.slice(2)])}}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
               {photos[2] === undefined 
               ?
-              (<img src="/img/add_photo.png" alt="add_photo" />)
+              (<label for="add_photo3"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
               (<S.Success src="/img/success.png" alt="added_photo"/>)
               }
-              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+              <S.AddPhoto type="file" id="add_photo3" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 2), event.target.files[0], ...photos.slice(3)])}}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
               {photos[3] === undefined 
               ?
-              (<img src="/img/add_photo.png" alt="add_photo" />)
+              (<label for="add_photo4"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
               (<S.Success src="/img/success.png" alt="added_photo"/>)
               }
-              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+              <S.AddPhoto type="file" id="add_photo4" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 3), event.target.files[0], ...photos.slice(4)])}}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
               {photos[4] === undefined 
               ?
-              (<img src="/img/add_photo.png" alt="add_photo" />)
+              (<label for="add_photo5"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
               (<S.Success src="/img/success.png" alt="added_photo"/>)
               }
-              <input type="file" accept="image/*" onChange={(event) => {console.log(event);
+              <S.AddPhoto type="file" id="add_photo5" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 4), event.target.files[0], ...photos.slice(5)])}}/>
           </S.ModalAddPhotos>
         </S.ModalAddPhotosBar>
@@ -96,11 +98,84 @@ function Header({page}) {
       <S.ModalInputPrice onChange={(event) => {setPrice(Number(event.target.value))}}/>
       <S.ModalInputPriceCover></S.ModalInputPriceCover>
     </S.ModalBlockPrice>
-    <S.ModalPublishButton onClick={() => postAdWithPhoto({})
-    //api
-    //dispatch new ad list
+    <S.ModalPublishButton onClick={() => {
+      if (photos.length === 0){
+        postAd({title: title, description: description, price: price, token: token}).then((item) => {
+          console.log(title, description, price, token);
+          if (item?.title !== title){
+            console.log("recall works");
+            dispatch(setToken(item))
+            console.log(item);
+            postAd({title, description, price, item}).then(() => {
+              console.log("postAd again");
+              getAllAds().then((ads) => {
+                function compare(a, b) {
+                  var dateA = new Date(a.created_on);
+                  var dateB = new Date(b.created_on);
+                 
+                  return dateB - dateA;
+                }
+                ads.sort(compare);
+                dispatch(setAllAds(ads));
+              });
+            })
+          }
+          else{
+            console.log("works normally");
+            getAllAds().then((ads) => {
+              console.log("got ads");
+              function compare(a, b) {
+                var dateA = new Date(a.created_on);
+                var dateB = new Date(b.created_on);
+               
+                return dateB - dateA;
+              }
+              ads.sort(compare);
+              dispatch(setAllAds(ads));
+            });
+            }
+        })
+      } else {
+        console.log("works with pictures");
+        console.log(title, description, price, photos, token);
+        postAdWithPhoto({title: title, description: description, price: price, photos: photos, token: token}).then((item) => {
+          if (item?.title !== title){
+            console.log("got token");
+            dispatch(setToken(item))
+            postAd({title, description, price, item}).then(() => {
+              getAllAds().then((ads) => {
+                console.log("got ads");
+                function compare(a, b) {
+                  var dateA = new Date(a.created_on);
+                  var dateB = new Date(b.created_on);
+                 
+                  return dateB - dateA;
+                }
+                ads.sort(compare);
+                dispatch(setAllAds(ads));
+              });
+            })
+          }
+          else{
+            console.log("works normally with pictures");
+            getAllAds().then((ads) => {
+              console.log("got ads");
+              function compare(a, b) {
+                var dateA = new Date(a.created_on);
+                var dateB = new Date(b.created_on);
+               
+                return dateB - dateA;
+              }
+              ads.sort(compare);
+              dispatch(setAllAds(ads));
+            });}
+        })
+      }
+    }
     //show user sells
-    //ability to update token
+    //fix data format
+    //fix token update
+    //require title and price
     }>Опубликовать</S.ModalPublishButton>
     </>
   );
