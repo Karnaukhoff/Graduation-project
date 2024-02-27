@@ -16,7 +16,7 @@ export const AppRoutes = () => {
             <Route path="/register" element={<Authorization />} />
             <Route path="/profile" element={<Profile />} />
                 <Route path="/advertisement/:id" element={<Advertisement />} />
-                <Route path="/my_ad" element={<MyAdvertisement />} />
+                <Route path="/my_ad/:id" element={<MyAdvertisement />} />
                 <Route path="/seller/:id" element={<Seller />} />
             <Route path="*" element={<NotFound />} />
         </Routes>  

@@ -12,6 +12,7 @@ function Header({page}) {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState();
   const [photos, setPhotos] = useState([]);
+  const [writeTitle, setWriteTitle] = useState(false);
   const dispatch=  useDispatch();
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
@@ -33,6 +34,12 @@ function Header({page}) {
     <S.ModalTitle>
         <S.ModalTitleHeader>Название</S.ModalTitleHeader>
         <S.ModalTitleInput placeholder="Введите название" onChange={(event) => {setTitle(event.target.value)}}/>
+        {
+          writeTitle ?
+          <S.WriteTitle>Не заполнено</S.WriteTitle>
+          :
+          null
+        }
     </S.ModalTitle>
     <S.ModalDescription>
         <S.ModalDescritionHeader>Описание</S.ModalDescritionHeader>
@@ -96,9 +103,13 @@ function Header({page}) {
     <S.ModalBlockPrice>
       <label for="price">Цена</label>
       <S.ModalInputPrice onChange={(event) => {setPrice(Number(event.target.value))}}/>
-      <S.ModalInputPriceCover></S.ModalInputPriceCover>
     </S.ModalBlockPrice>
     <S.ModalPublishButton onClick={() => {
+      if (title === ""){
+        setWriteTitle(true)
+        return
+      }
+      setWriteTitle(false)
       if (photos.length === 0){
         postAd({title: title, description: description, price: price, token: token}).then((item) => {
           console.log(title, description, price, token);
@@ -106,7 +117,7 @@ function Header({page}) {
             console.log("recall works");
             dispatch(setToken(item))
             console.log(item);
-            postAd({title, description, price, item}).then(() => {
+            postAd({title: title, description: description, price: price, token: item}).then(() => {
               console.log("postAd again");
               getAllAds().then((ads) => {
                 function compare(a, b) {
@@ -172,9 +183,6 @@ function Header({page}) {
         })
       }
     }
-    //show user sells
-    //fix data format
-    //fix token update
     //require title and price
     }>Опубликовать</S.ModalPublishButton>
     </>

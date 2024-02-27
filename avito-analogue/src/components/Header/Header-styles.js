@@ -49,6 +49,9 @@ export const ModalTitleHeader = styled.span`
   color: #000000;
   font-size: 16px;
 `;
+export const WriteTitle = styled.div`
+  color: red;
+`;
 export const ModalTitleInput = styled.input`
   width: 590px;
   height: 50px;

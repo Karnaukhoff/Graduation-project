@@ -188,7 +188,7 @@ export const MainCards = styled.div`
     -ms-grid-columns: (270px)[4];
         grid-template-columns: repeat(4, 270px);
     grid-auto-rows: 441px;
-    grid-gap: 40px 26px;
+    grid-gap: 80px 26px;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;

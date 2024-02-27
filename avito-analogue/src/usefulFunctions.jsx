@@ -62,13 +62,13 @@ export function priceFormat(price) {
       releasedHours === currentHours
     ) {
       let Min = ""
-      if (One.indexOf(releasedMinutes) !== -1){
+      if (One.indexOf(currentMinutes - releasedMinutes) !== -1){
         Min = " минуту назад"
       }
-      else if (Two.indexOf(releasedMinutes) !== -1){
+      else if (Two.indexOf(currentMinutes - releasedMinutes) !== -1){
         Min = " минуты назад"
       }
-      else if (Three.indexOf(releasedMinutes) !== -1){
+      else if (Three.indexOf(currentMinutes - releasedMinutes) !== -1){
         Min = " минут назад"
       }
       return (currentMinutes - releasedMinutes).toString() + Min
@@ -76,9 +76,9 @@ export function priceFormat(price) {
     else if (
       releasedYear === currentYear
     ){
-      if (currentHours - releasedHours === 1) return "1 час назад"
-      else if (currentHours - releasedHours <= 3) return (currentHours - releasedHours).toString() + " часа назад"
-      else if (currentDay === releasedDate){
+      if (currentHours - releasedHours === 1 && currentDay === releasedDay) return "1 час назад"
+      else if (currentHours - releasedHours <= 3 && currentDay === releasedDay) return (currentHours - releasedHours).toString() + " часа назад"
+      else if (currentDay === releasedDay){
         return `Сегодня в ${releasedHours}:${formatMinutes(releasedMinutes)}`
       }
       else if (currentDay - releasedDay === 1){

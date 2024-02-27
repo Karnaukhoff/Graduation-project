@@ -204,6 +204,7 @@ export const Profile = () => {
                         city={ad.city}
                         released={ad.created_on}
                         id={ad.id}
+                        userId={ad.user_id}
                       />
                     );
                   }
