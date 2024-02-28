@@ -13,9 +13,9 @@ function Advertisement({ images, title, price, city, released, id, userId }) {
   return (
     <S.Item onClick={() => {
       localStorage.setItem("postId", JSON.stringify(id))
-      if (user.id === userId){
-        navigate(`/my_ad/${id}`)
-      } else {navigate(`/advertisement/${id}`)}      
+      if (user?.id === userId){
+        navigate(`/my_ad`)
+      } else {navigate(`/advertisement`)}      
     }}>
       <S.Adv>
         <S.AdvImg>

@@ -262,7 +262,7 @@ export const MyAdvertisement = () => {
                                 </S.ArticleBtnBlock>
                                 <S.ArticleAuthor onClick={() => {
                                     localStorage.setItem("userId", JSON.stringify(ad.user.id))
-                                    navigate(`../seller/${ad.user.id}`);
+                                    navigate(`../seller`);
                                     }}>
                                     <S.AuthorImg>
                                         <S.AuthorImgPicture                       
