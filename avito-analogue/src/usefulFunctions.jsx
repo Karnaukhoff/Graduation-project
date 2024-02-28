@@ -46,6 +46,11 @@ export function priceFormat(price) {
     let currentHours = currentDate.getHours();
     let currentMinutes = currentDate.getMinutes();
 
+    if (releasedHours >= 24){
+      releasedHours -= 24;
+      releasedDay += 1
+    }
+
     if (
       releasedYear === currentYear &&
       releasedMonth === currentMonth &&
@@ -99,4 +104,15 @@ export function priceFormat(price) {
     const sellsFrom = new Date(date)
 
     return `Продает товары с ${monthFormat(sellsFrom.getMonth() + 1)} ${sellsFrom.getYear() + 1900} года`
+  }
+  export function reviewTitle(num){
+    if ((num === 1 && num !== 11) || num % 10 === 1){
+      return num.toString() + " отзыв"
+    }
+    else if ((num % 10 === 2 || num % 10 === 3 || num % 10 === 4) && (num < 10 || num > 19)){
+      return num.toString() + " отзыва"
+    }
+    else {
+      return num.toString() + " отзывов"
+    }
   }

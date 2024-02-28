@@ -3,17 +3,21 @@ import Modal from "react-modal";
 import * as S from "./styles/adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
-import { getAd } from "../api/api";
-import { dateFormat, priceFormat, sellsFrom } from "../usefulFunctions";
+import { getAd, getComments, postComment } from "../api/api";
+import { dateFormat, priceFormat, reviewTitle, sellsFrom } from "../usefulFunctions";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "../store/slices/userSlice";
 
 export const Advertisement = () => {
   const [ad, setAd] = useState(null);
   const [show, setShow] = useState(false);
   const user = useSelector((state) => state.user.user);
-  //const [comments, setComments] = useState([]);
+  const token = useSelector((state) => state.user.token);
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
   const navigate = useNavigate();
+  const dispatch=  useDispatch();
   const [modalIsOpenReview, setModalIsOpenReview] = useState(false);
 
   useEffect(() => {
@@ -21,44 +25,101 @@ export const Advertisement = () => {
       setAd(post);
     });
   }, []);
-  //Отзывы
+  useEffect(() => {
+    getComments({ pk: JSON.parse(localStorage.getItem("postId")) }).then(
+      (items) => {
+        setComments(items);
+      }
+    );
+  }, []);
+
   const openModalReview = () => {
     setModalIsOpenReview(true);
   };
 
   const closeModalReview = () => {
     setModalIsOpenReview(false);
+    setCommentText("");
   };
+
   const modalContentReviews = (
     <>
-    <S.ModalHeader>
-      <S.ModalHeaderTitle>Отзывы о товаре</S.ModalHeaderTitle>
-      <S.ModalHeaderClose src="/img/close_modal.png" alt="close" onClick={closeModalReview}/>
-    </S.ModalHeader>
-    <S.ModalAddReviewForm>
+      <S.ModalHeader>
+        <S.ModalHeaderTitle>Отзывы о товаре</S.ModalHeaderTitle>
+        <S.ModalHeaderClose
+          src="/img/close_modal.png"
+          alt="close"
+          onClick={closeModalReview}
+        />
+      </S.ModalHeader>
+      <S.ModalAddReviewForm>
         <S.ModalAddReviewNewArtBlock>
-            <S.ModalAddReviewlabel>Добавить отзыв</S.ModalAddReviewlabel>
-            <S.ModalAddReviewTextear cols="auto" rows="5" placeholder="Введите описание"></S.ModalAddReviewTextear>
+          <S.ModalAddReviewlabel>Добавить отзыв</S.ModalAddReviewlabel>
+          <S.ModalAddReviewTextear
+            cols="auto"
+            rows="5"
+            placeholder="Введите описание"
+            value={commentText}
+            onChange={(event) => setCommentText(event.target.value)}
+          ></S.ModalAddReviewTextear>
         </S.ModalAddReviewNewArtBlock>
 
-        {user ? 
-        <S.ModalAddReviewButton>Опубликовать</S.ModalAddReviewButton>
-        :
-        <S.ModalAddReviewButtonDisabled disabled={true}>Опубликовать</S.ModalAddReviewButtonDisabled>
-        }
-        
-    </S.ModalAddReviewForm>
-    <S.ModalReviews>
+        {user ? (
+          <S.ModalAddReviewButton onClick={() => {
+            postComment({pk: JSON.parse(localStorage.getItem("postId")), comment: commentText, token: token}).then((item) => {
+              if (item?.access_token){
+                dispatch(setToken(item));
+                postComment({pk: JSON.parse(localStorage.getItem("postId")), comment: commentText, token: item}).then((newItem) => {
+                  getComments({ pk: JSON.parse(localStorage.getItem("postId")) }).then((result) => setComments(result))
+                  setCommentText("");
+                  openModalReview();
+                  console.log(newItem);
+                })
+              }
+              else{
+                getComments({ pk: JSON.parse(localStorage.getItem("postId")) }).then((result) => setComments(result))
+                setCommentText("");
+                openModalReview();
+              }
+            })
+          }}>Опубликовать</S.ModalAddReviewButton>
+        ) : (
+          <S.ModalAddReviewButtonDisabled disabled={true}>
+            Опубликовать
+          </S.ModalAddReviewButtonDisabled>
+        )}
+      </S.ModalAddReviewForm>
+      <S.ModalReviews>
+        {comments.map((comment) => {
+          return (
+            <S.Review>
+              <S.ReviewItem>
+                <S.ReviewLeft>
+                  <S.ReviewImg>
+                    <S.ReviewImgPicture src={`http://localhost:8090/${comment.author.avatar}`} alt="" />
+                  </S.ReviewImg>
+                </S.ReviewLeft>
+                <S.ReviewRight>
+                  <S.ReviewName>
+                    {comment.author.name}{" "}
+                    <S.ReviewNameSpan>
+                      {dateFormat(comment.created_on)}
+                    </S.ReviewNameSpan>
+                  </S.ReviewName>
 
-        {/**Review */}
-        
-
-    </S.ModalReviews>
+                  <S.ReviewText>{comment.text}</S.ReviewText>
+                </S.ReviewRight>
+              </S.ReviewItem>
+            </S.Review>
+          );
+        })}
+      </S.ModalReviews>
     </>
-);
+  );
+
   return (
     <S.Container>
-      <Header page={"adv"}/>
+      <Header page={"adv"} />
       <main>
         <S.MainContainer>
           <MainMenu />
@@ -121,24 +182,26 @@ export const Advertisement = () => {
                   </S.ArticDate>
                   <S.ArticCity>{ad?.user.city}</S.ArticCity>
                   <S.ArticLink href="#" onClick={openModalReview}>
-                    23 отзыва
+                    {reviewTitle(comments.length)}
                   </S.ArticLink>
-                  <Modal isOpen={modalIsOpenReview} onRequestClose={closeModalReview} style={
-                      {
-                          content: {
-                            width: "600px",
-                            height: "800px",
-                            inset: "unset"
-                          },
-                          overlay: {
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center"
-                          }
-                      }
-                    }>
-                      {modalContentReviews}
-                    </Modal>
+                  <Modal
+                    isOpen={modalIsOpenReview}
+                    onRequestClose={closeModalReview}
+                    style={{
+                      content: {
+                        width: "600px",
+                        height: "800px",
+                        inset: "unset",
+                      },
+                      overlay: {
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      },
+                    }}
+                  >
+                    {modalContentReviews}
+                  </Modal>
                 </S.ArticInfo>
                 <S.ArticPrice>
                   {ad ? priceFormat(ad.price) : null} ₽
@@ -153,10 +216,12 @@ export const Advertisement = () => {
                     {show ? ad?.user.phone : "X XXX XXX XX XX"}
                   </S.ArticButtonSpan>
                 </S.ArticButton>
-                <S.ArticleAuthor onClick={() => {
-                  localStorage.setItem("userId", JSON.stringify(ad.user.id))
-                  navigate(`../seller`);
-                  }}>
+                <S.ArticleAuthor
+                  onClick={() => {
+                    localStorage.setItem("userId", JSON.stringify(ad.user.id));
+                    navigate(`../seller`);
+                  }}
+                >
                   <S.AuthorImg>
                     <S.AuthorImgPicture
                       src={`http://localhost:8090/${ad?.user.avatar}`}
@@ -165,7 +230,9 @@ export const Advertisement = () => {
                   </S.AuthorImg>
                   <S.AuthorContent>
                     <S.AuthorName>{ad?.user.name}</S.AuthorName>
-                    <S.AuthorAbout>{ad ? sellsFrom(ad?.user.sells_from) : null}</S.AuthorAbout>
+                    <S.AuthorAbout>
+                      {ad ? sellsFrom(ad?.user.sells_from) : null}
+                    </S.AuthorAbout>
                   </S.AuthorContent>
                 </S.ArticleAuthor>
               </S.ArticBlock>

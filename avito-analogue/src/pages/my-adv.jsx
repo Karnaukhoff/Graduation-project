@@ -4,10 +4,11 @@ import * as S from "./styles/my-adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAd, getAd, getAllAds, updateAd } from "../api/api";
+import { deleteAd, getAd, getAllAds, getComments, postComment, updateAd } from "../api/api";
 import { useNavigate } from "react-router-dom";
-import { dateFormat, priceFormat, sellsFrom } from "../usefulFunctions";
+import { dateFormat, priceFormat, reviewTitle, sellsFrom } from "../usefulFunctions";
 import { setAllAds } from "../store/slices/adSlice";
+import { setToken } from "../store/slices/userSlice";
 
 export const MyAdvertisement = () => {
     const [modalIsOpenEdit, setModalIsOpenEdit] = useState(false);
@@ -18,9 +19,10 @@ export const MyAdvertisement = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState();
-    //const [photos, setPhotos] = useState([]);
+    const [photos, setPhotos] = useState([]);
     const dispatch = useDispatch();
-    //const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState([]);
+    const [commentText, setCommentText] = useState("");
     const navigate = useNavigate();
   
     useEffect(() => {
@@ -28,6 +30,14 @@ export const MyAdvertisement = () => {
         setAd(post);
       });
     }, []);
+    useEffect(() => {
+        getComments({ pk: JSON.parse(localStorage.getItem("postId")) }).then(
+          (items) => {
+            console.log(items);
+            setComments(items);
+          }
+        );
+      }, []);
 
     const openModalEdit = () => {
         setTitle(ad.title);
@@ -46,8 +56,9 @@ export const MyAdvertisement = () => {
     
       const closeModalReview = () => {
         setModalIsOpenReview(false);
+        setCommentText("");
       };
-  
+      console.log(ad);
     const modalContentEdit = (
       <>
       <S.ModalHeader>
@@ -65,26 +76,56 @@ export const MyAdvertisement = () => {
       <S.ModalPhotos>
           <S.ModalFormNewArtP>Фотографии товара <S.ModalFormNewArtSpan>не более 5 фотографий</S.ModalFormNewArtSpan></S.ModalFormNewArtP>
           <S.ModalAddPhotosBar>
-            <S.ModalAddPhotos>
-                <img src="/img/add_photo.png" alt="add_photo" />
-                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
-            </S.ModalAddPhotos>
-            <S.ModalAddPhotos>
-                <img src="/img/add_photo.png" alt="add_photo" />
-                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
-            </S.ModalAddPhotos>
-            <S.ModalAddPhotos>
-                <img src="/img/add_photo.png" alt="add_photo" />
-                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
-            </S.ModalAddPhotos>
-            <S.ModalAddPhotos>
-                <img src="/img/add_photo.png" alt="add_photo" />
-                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
-            </S.ModalAddPhotos>
-            <S.ModalAddPhotos>
-                <img src="/img/add_photo.png" alt="add_photo" />
-                <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
-            </S.ModalAddPhotos>
+          <S.ModalAddPhotos>
+              {photos[0] === undefined 
+              ?
+              (<label for="add_photo1"><img src="/img/add_photo.png" alt="add_photo" /></label>)
+              :
+              (<S.Success src={URL.createObjectURL(photos[0])} alt="added_photo"/>)
+              }
+              <S.AddPhoto type="file" id="add_photo1" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 0), event.target.files[0], ...photos.slice(1)])}}/>
+        </S.ModalAddPhotos>
+          <S.ModalAddPhotos>
+              {photos[1] === undefined 
+              ?
+              (<label for="add_photo2"><img src="/img/add_photo.png" alt="add_photo" /></label>)
+              :
+              (<S.Success src={URL.createObjectURL(photos[1])} alt="added_photo"/>)
+              }
+              <S.AddPhoto type="file" id="add_photo2" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 1), event.target.files[0], ...photos.slice(2)])}}/>
+          </S.ModalAddPhotos>
+          <S.ModalAddPhotos>
+              {photos[2] === undefined 
+              ?
+              (<label for="add_photo3"><img src="/img/add_photo.png" alt="add_photo" /></label>)
+              :
+              (<S.Success src={URL.createObjectURL(photos[2])} alt="added_photo"/>)
+              }
+              <S.AddPhoto type="file" id="add_photo3" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 2), event.target.files[0], ...photos.slice(3)])}}/>
+          </S.ModalAddPhotos>
+          <S.ModalAddPhotos>
+              {photos[3] === undefined 
+              ?
+              (<label for="add_photo4"><img src="/img/add_photo.png" alt="add_photo" /></label>)
+              :
+              (<S.Success src={URL.createObjectURL(photos[3])} alt="added_photo"/>)
+              }
+              <S.AddPhoto type="file" id="add_photo4" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 3), event.target.files[0], ...photos.slice(4)])}}/>
+          </S.ModalAddPhotos>
+          <S.ModalAddPhotos>
+              {photos[4] === undefined 
+              ?
+              (<label for="add_photo5"><img src="/img/add_photo.png" alt="add_photo" /></label>)
+              :
+              (<S.Success src={URL.createObjectURL(photos[4])} alt="added_photo"/>)
+              }
+              <S.AddPhoto type="file" id="add_photo5" accept="image/*" onChange={(event) => {console.log(event);
+                setPhotos([...photos.slice(0, 4), event.target.files[0], ...photos.slice(5)])}}/>
+          </S.ModalAddPhotos>
           </S.ModalAddPhotosBar>
       </S.ModalPhotos>
       <S.ModalBlockPrice>
@@ -122,19 +163,61 @@ export const MyAdvertisement = () => {
         <S.ModalAddReviewForm>
             <S.ModalAddReviewNewArtBlock>
                 <S.ModalAddReviewlabel>Добавить отзыв</S.ModalAddReviewlabel>
-                <S.ModalAddReviewTextear cols="auto" rows="5" placeholder="Введите описание"></S.ModalAddReviewTextear>
+                <S.ModalAddReviewTextear cols="auto" rows="5" placeholder="Введите описание" value={commentText}
+            onChange={(event) => setCommentText(event.target.value)}></S.ModalAddReviewTextear>
             </S.ModalAddReviewNewArtBlock>
 
-            {user ? 
-            <S.ModalAddReviewButton>Опубликовать</S.ModalAddReviewButton>
-            :
-            <S.ModalAddReviewButtonDisabled disabled={true}>Опубликовать</S.ModalAddReviewButtonDisabled>
-            }
+            {user ? (
+          <S.ModalAddReviewButton onClick={() => {
+            postComment({pk: JSON.parse(localStorage.getItem("postId")), comment: commentText, token: token}).then((item) => {
+              if (item?.access_token){
+                dispatch(setToken(item));
+                postComment({pk: JSON.parse(localStorage.getItem("postId")), comment: commentText, token: item}).then((newItem) => {
+                  getComments({ pk: JSON.parse(localStorage.getItem("postId")) }).then((result) => setComments(result))
+                  setCommentText("");
+                  openModalReview();
+                  console.log(newItem);
+                })
+              }
+              else{
+                getComments({ pk: JSON.parse(localStorage.getItem("postId")) }).then((result) => setComments(result))
+                setCommentText("");
+                openModalReview();
+              }
+            })
+          }}>Опубликовать</S.ModalAddReviewButton>
+        ) : (
+          <S.ModalAddReviewButtonDisabled disabled={true}>
+            Опубликовать
+          </S.ModalAddReviewButtonDisabled>
+        )}
             
         </S.ModalAddReviewForm>
         <S.ModalReviews>
 
-            {/**Review */}
+        {comments.map((comment) => {
+          return (
+            <S.Review>
+              <S.ReviewItem>
+                <S.ReviewLeft>
+                  <S.ReviewImg>
+                    <S.ReviewImgPicture src={`http://localhost:8090/${comment.author.avatar}`} alt="" />
+                  </S.ReviewImg>
+                </S.ReviewLeft>
+                <S.ReviewRight>
+                  <S.ReviewName>
+                    {comment.author.name}{" "}
+                    <S.ReviewNameSpan>
+                      {dateFormat(comment.created_on)}
+                    </S.ReviewNameSpan>
+                  </S.ReviewName>
+
+                  <S.ReviewText>{comment.text}</S.ReviewText>
+                </S.ReviewRight>
+              </S.ReviewItem>
+            </S.Review>
+          );
+        })}
             
 
         </S.ModalReviews>
@@ -205,7 +288,7 @@ export const MyAdvertisement = () => {
                                 <S.ArticInfo>
                                     <S.ArticDate>{ad ? dateFormat(ad.created_on) : null}</S.ArticDate>
                                     <S.ArticCity>{ad?.user.city}</S.ArticCity>
-                                    <S.ArticLink href="#" onClick={openModalReview}>4 отзыва</S.ArticLink>
+                                    <S.ArticLink href="#" onClick={openModalReview}>{reviewTitle(comments.length)}</S.ArticLink>
                                     <Modal isOpen={modalIsOpenReview} onRequestClose={closeModalReview} style={
                                         {
                                             content: {

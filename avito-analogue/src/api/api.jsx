@@ -140,14 +140,6 @@ export async function updateUserData(
     return newToken;
   }
 }
-export async function getComments() {
-  const response = await fetch(`${baseURL}/comments`);
-  if (!response.ok) {
-    throw new Error("Ошибка сервера");
-  }
-  const data = await response.json();
-  return data;
-}
 export async function postAvatar({ avatar, token }) {
   const data = new FormData();
   data.append("file", avatar);
@@ -336,4 +328,40 @@ export async function updatePassword({ password, repeat, token }) {
   const result = await response.json();
   return result;
 }
-// /ads/me
+export async function getComments({pk}) {
+  const response = await fetch(`${baseURL}/ads/${pk}/comments`);
+  if (!response.ok) {
+    throw new Error("Ошибка сервера");
+  }
+  const comments = await response.json();
+  return comments;
+}
+export async function postComment({pk, comment, token}) {
+  const response = await fetch(`${baseURL}/ads/${pk}/comments`,
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      text: comment,
+    }),
+  }
+  );
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+  if (response.status === 401){
+    console.log(token.access_token, token.refresh_token);
+    const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
+    console.log(newToken);
+    return newToken;
+  }
+  const comments = await response.json();
+  return comments;
+}
