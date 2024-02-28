@@ -185,14 +185,16 @@ export async function postAdWithPhoto({
   token,
 }) {
   const photosArray = new FormData();
-  photosArray.append("files", photos[0])
-  console.log(photos, photos[0]);
+  
+  for (let elem of photos){
+    photosArray.append("files", elem);
+  }
   const response = await fetch(`${baseURL}/ads?title=${title}&description=${description}&price=${price}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token.access_token}`,
     },
-    body: photos,
+    body: photosArray,
 
   });
   if (response.status === 500) {

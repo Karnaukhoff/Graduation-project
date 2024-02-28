@@ -15,7 +15,6 @@ export const Profile = () => {
   const token = useSelector((state) => state.user.token);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [error, setError] = useState(false);
   const [dataProfile, setDataProfile] = useState({
     name: "",
     surname: "",
@@ -136,12 +135,6 @@ export const Profile = () => {
             setNewPassword(event.target.value)
           }}
         />
-        {
-          error ?
-          <S.WriteTitle>Пароли не совпадают</S.WriteTitle>
-          :
-          null
-        }
         <S.ModalUploadPassword onClick={() => {
           updatePassword({password: currentPassword, repeat: newPassword, token: token}).then((item) => {
             if (item?.access_token){
@@ -152,7 +145,6 @@ export const Profile = () => {
             }
             console.log(item);
             console.log("changed");
-            setError(false);
             closeModal();
           })
         }}>Сохранить</S.ModalUploadPassword>

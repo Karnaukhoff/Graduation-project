@@ -147,14 +147,13 @@ function Header({page}) {
             }
         })
       } else {
-
         console.log("works with pictures");
         console.log(title, description, price, photos, token);
         postAdWithPhoto({title: title, description: description, price: price, photos: photos, token: token}).then((item) => {
           if (item?.title !== title){
             console.log("got token");
             dispatch(setToken(item))
-            postAd({title, description, price, item}).then(() => {
+            postAdWithPhoto({title: title, description: description, price: price, photos: photos, token: item}).then(() => {
               getAllAds().then((ads) => {
                 console.log("got ads");
                 function compare(a, b) {
@@ -165,6 +164,8 @@ function Header({page}) {
                 }
                 ads.sort(compare);
                 dispatch(setAllAds(ads));
+                closeModal();
+                setPhotos([]);
               });
             })
           }
@@ -180,6 +181,8 @@ function Header({page}) {
               }
               ads.sort(compare);
               dispatch(setAllAds(ads));
+              closeModal();
+              setPhotos([]);
             });}
         })
       }
