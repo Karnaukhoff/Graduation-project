@@ -310,6 +310,7 @@ export async function updatePassword({ password, repeat, token }) {
   const response = await fetch(`${baseURL}/user/password`, {
     method: "PUT",
     headers: {
+      Authorization: `Bearer ${token.access_token}`,
       "content-type": "application/json",
     },
     body: JSON.stringify({
@@ -324,12 +325,12 @@ export async function updatePassword({ password, repeat, token }) {
     const result = await response.json();
     return result;
   }
-  /*if (response.status === 401){
+  if (response.status === 401){
     console.log(token.access_token, token.refresh_token);
     const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
     console.log(newToken);
     return newToken;
-  }*/
+  }
   const result = await response.json();
   return result;
 }

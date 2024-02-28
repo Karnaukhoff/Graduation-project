@@ -13,8 +13,8 @@ export const Profile = () => {
   const user = useSelector((state) => state.user.user);
   const allAds = useSelector((state) => state.advertisement.all);
   const token = useSelector((state) => state.user.token);
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [error, setError] = useState(false);
   const [dataProfile, setDataProfile] = useState({
     name: "",
@@ -121,19 +121,19 @@ export const Profile = () => {
         <S.ModalInput
           type="password"
           name="password"
-          placeholder="Новый пароль"
-          value={password}
+          placeholder="Текущий пароль"
+          value={currentPassword}
           onChange={(event) => {
-            setPassword(event.target.value)
+            setCurrentPassword(event.target.value)
           }}
         />
         <S.ModalInput
           type="password"
           name="password"
-          placeholder="Повторите пароль"
-          value={repeatPassword}
+          placeholder="Новый пароль"
+          value={newPassword}
           onChange={(event) => {
-            setRepeatPassword(event.target.value)
+            setNewPassword(event.target.value)
           }}
         />
         {
@@ -143,17 +143,13 @@ export const Profile = () => {
           null
         }
         <S.ModalUploadPassword onClick={() => {
-          if (password !== repeatPassword){
-            setError(true);
-            return;
-          }
-          updatePassword({password: password, repeat: repeatPassword, token: token}).then((item) => {
-            /*if (item?.access_token){
+          updatePassword({password: currentPassword, repeat: newPassword, token: token}).then((item) => {
+            if (item?.access_token){
               setToken(item);
-              updatePassword({password: password, repeat: repeatPassword, token: item}).then((item) => {
+              updatePassword({password: currentPassword, repeat: newPassword, token: item}).then((item) => {
                 console.log(item, "from update token");
               })
-            }*/
+            }
             console.log(item);
             console.log("changed");
             setError(false);

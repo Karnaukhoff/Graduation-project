@@ -24,7 +24,7 @@ function Header({page}) {
   const closeModal = () => {
     setModalIsOpen(false);
   };
-  console.log(photos);
+
   const modalContent = (
     <>
     <S.ModalHeader>
@@ -147,7 +147,7 @@ function Header({page}) {
             }
         })
       } else {
-        
+
         console.log("works with pictures");
         console.log(title, description, price, photos, token);
         postAdWithPhoto({title: title, description: description, price: price, photos: photos, token: token}).then((item) => {
