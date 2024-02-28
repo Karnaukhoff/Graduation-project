@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
 import * as S from "./styles/profile-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import Advertisement from "../components/Advertisement/Advertisement";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAds, postAvatar, updateUserData } from "../api/api";
+import { getAllAds, postAvatar, updatePassword, updateUserData } from "../api/api";
 import { setAllAds } from "../store/slices/adSlice";
 import { setToken, setUser } from "../store/slices/userSlice";
 
@@ -12,6 +13,9 @@ export const Profile = () => {
   const user = useSelector((state) => state.user.user);
   const allAds = useSelector((state) => state.advertisement.all);
   const token = useSelector((state) => state.user.token);
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [error, setError] = useState(false);
   const [dataProfile, setDataProfile] = useState({
     name: "",
     surname: "",
@@ -19,6 +23,15 @@ export const Profile = () => {
     phone: "",
     email: "",
   });
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     setDataProfile({
@@ -40,6 +53,10 @@ export const Profile = () => {
   }, []);
   function onChangeInput(e) {
     setDataProfile({ ...dataProfile, [e.name]: e.value });
+  }
+  function openChangePassword(event){
+    event.preventDefault();
+    openModal()
   }
   function updateData(event) {
     event.preventDefault();
@@ -96,6 +113,56 @@ export const Profile = () => {
       })
     }
   };
+
+  const changePassword = (
+
+      <S.Inputs>
+        <S.ModalHeaderClose src="/img/close_modal.png" alt="close" onClick={closeModal} />
+        <S.ModalInput
+          type="password"
+          name="password"
+          placeholder="Новый пароль"
+          value={password}
+          onChange={(event) => {
+            setPassword(event.target.value)
+          }}
+        />
+        <S.ModalInput
+          type="password"
+          name="password"
+          placeholder="Повторите пароль"
+          value={repeatPassword}
+          onChange={(event) => {
+            setRepeatPassword(event.target.value)
+          }}
+        />
+        {
+          error ?
+          <S.WriteTitle>Пароли не совпадают</S.WriteTitle>
+          :
+          null
+        }
+        <S.ModalUploadPassword onClick={() => {
+          if (password !== repeatPassword){
+            setError(true);
+            return;
+          }
+          updatePassword({password: password, repeat: repeatPassword, token: token}).then((item) => {
+            /*if (item?.access_token){
+              setToken(item);
+              updatePassword({password: password, repeat: repeatPassword, token: item}).then((item) => {
+                console.log(item, "from update token");
+              })
+            }*/
+            console.log(item);
+            console.log("changed");
+            setError(false);
+            closeModal();
+          })
+        }}>Сохранить</S.ModalUploadPassword>
+        </S.Inputs>
+
+  );
 
   return (
     <S.Container>
@@ -183,6 +250,25 @@ export const Profile = () => {
                     <S.SettingsBtn onClick={updateData}>
                       Сохранить
                     </S.SettingsBtn>
+                    <S.SettingsBtn onClick={openChangePassword}>
+                      Сменить пароль
+                    </S.SettingsBtn>
+                    <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={
+                        {
+                            content: {
+                                width: "300px",
+                                height: "300px",
+                                inset: "unset"
+                            },
+                            overlay: {
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }
+                        }
+                        }>
+                          {changePassword}
+                    </Modal>
                   </S.SettingsForm>
                 </S.SettingsRight>
               </S.ProfileSettings>

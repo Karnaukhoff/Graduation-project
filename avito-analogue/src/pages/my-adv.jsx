@@ -18,7 +18,7 @@ export const MyAdvertisement = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState();
-    const [photos, setPhotos] = useState([]);
+    //const [photos, setPhotos] = useState([]);
     const dispatch = useDispatch();
     //const [comments, setComments] = useState([]);
     const navigate = useNavigate();
@@ -221,7 +221,7 @@ export const MyAdvertisement = () => {
                                         }
                                     }>
                                         {modalContentReviews}
-                                     </Modal>
+                                    </Modal>
                                 </S.ArticInfo>
                                 <S.ArticPrice>{ad ? priceFormat(ad.price) : null} ₽</S.ArticPrice>
                                 <S.ArticleBtnBlock>

@@ -257,3 +257,44 @@ export const AdvContentDate = styled.p`
     line-height: 21px;
     color: #5F5F5F;
 `;
+export const Inputs = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+`;
+export const WriteTitle = styled.div`
+  color: red;
+`;
+export const ModalInput = styled.input`
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #d0cece;
+  padding: 8px 1px;
+
+  &::placeholder {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: #d0cece;
+  }
+`;
+export const ModalHeaderClose = styled.img`
+  width: 30px;
+  height: 30px;
+  margin-top: 30px;
+`;
+export const ModalUploadPassword = styled.button`
+  width: 181px;
+  height: 50px;
+  background-color: #009EE4;
+  border: 1px solid #D9D9D9;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  &:hover {
+    background-color: #0080C1;
+  }
+`;
