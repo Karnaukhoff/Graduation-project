@@ -298,7 +298,12 @@ export const ModalAddPhotosBar = styled.div`
   overflow: hidden;
 `;
 export const Success = styled.img`
-  width: 90px
+  width: 90px;
+  height: 90px;
+`;
+export const AddPhotoBlock = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
 export const AddPhoto = styled.input`
   display: none;

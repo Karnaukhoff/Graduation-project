@@ -37,7 +37,7 @@ export const MyAdvertisement = () => {
     const [photoChanged3, setPhotoChanged3] = useState(false);
     const [photoChanged4, setPhotoChanged4] = useState(false);
     const [photoChanged5, setPhotoChanged5] = useState(false);
-  
+    console.log(photos);
     useEffect(() => {
       getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
         setAd(post);
@@ -57,8 +57,6 @@ export const MyAdvertisement = () => {
         setDescription(ad.description);
         setPrice(ad.price);
         setModalIsOpenEdit(true);
-        //photoes
-        //добавить картинку в объявление
         setPhotos(ad.images)
         console.log(ad.images);
     };
@@ -76,6 +74,7 @@ export const MyAdvertisement = () => {
         setModalIsOpenReview(false);
         setCommentText("");
       };
+
     const modalContentEdit = (
       <>
       <S.ModalHeader>
@@ -90,11 +89,12 @@ export const MyAdvertisement = () => {
           <S.ModalDescritionHeader>Описание</S.ModalDescritionHeader>
           <S.ModalDescriptionInput placeholder="Введите описание" onChange={(event) => {setDescription(event.target.value)}} value={description}/>
       </S.ModalDescription>
-      <S.ModalPhotos>
+        <S.ModalPhotos>
           <S.ModalFormNewArtP>Фотографии товара <S.ModalFormNewArtSpan>не более 5 фотографий</S.ModalFormNewArtSpan></S.ModalFormNewArtP>
           <S.ModalAddPhotosBar>
           <S.ModalAddPhotos>
-            {photos[0] === undefined 
+            <S.AddPhotoBlock>
+            {photos[0] === undefined || photos[0] === null
               ?
               <label for="add_photo1"><img src="/img/add_photo.png" alt="add_photo" /></label>
               :
@@ -102,10 +102,11 @@ export const MyAdvertisement = () => {
                     <S.Success src={photoChanged1 ? URL.createObjectURL(photos[0]) : `http://localhost:8090/${photos[0].url}`} alt="added_photo" />
                 </label>
               }
+            
               <S.AddPhoto type="file" id="add_photo1" accept="image/*" onChange={(event) => {
                 setPhotos([...photos.slice(0, 0), event.target.files[0], ...photos.slice(1)])
                 setPhotoChanged1(true)
-                if (photos[0] !== undefined){
+                if (photos[0] !== undefined && photos[0] !== null){
                     //удалить
                     deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[0].url}`, token: token}).then((item) => {
                         console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[0].url}`, "token:", token, photos);
@@ -129,9 +130,21 @@ export const MyAdvertisement = () => {
                     })
                 }
                 }}/>
-          </S.ModalAddPhotos>
+                <button hidden={photos[0] ? false : true} onClick={() => {
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[0].url}`, token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[0].url}`, token: item})
+                            console.log("delete with update");
+                        }
+                    })
+                    setPhotos([...photos.slice(0, 0), null, ...photos.slice(1)])
+                }}>Удалить</button>
+            </S.AddPhotoBlock>
+        </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-            {photos[1] === undefined 
+          <S.AddPhotoBlock>
+            {photos[1] === undefined || photos[1] === null
               ?
               <label for="add_photo2"><img src="/img/add_photo.png" alt="add_photo" /></label>
               :
@@ -142,7 +155,7 @@ export const MyAdvertisement = () => {
               <S.AddPhoto type="file" id="add_photo2" accept="image/*" onChange={(event) => {
                 setPhotos([...photos.slice(0, 1), event.target.files[0], ...photos.slice(2)])
                 setPhotoChanged2(true)
-                if (photos[1] !== undefined){
+                if (photos[1] !== undefined && photos[1] !== null){
                     //удалить
                     deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[1].url}`, token: token}).then((item) => {
                         console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[1].url}`, "token:", token, photos);
@@ -166,9 +179,21 @@ export const MyAdvertisement = () => {
                     })
                 }
                 }}/>
+                <button hidden={photos[1] ? false : true} onClick={() => {
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[1].url}`, token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[1].url}`, token: item})
+                            console.log("delete with update");
+                        }
+                    })
+                    setPhotos([...photos.slice(0, 1), null, ...photos.slice(2)])
+                }}>Удалить</button>
+            </S.AddPhotoBlock>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-            {photos[2] === undefined 
+          <S.AddPhotoBlock> 
+            {photos[2] === undefined || photos[2] === null
               ?
               <label for="add_photo3"><img src="/img/add_photo.png" alt="add_photo" /></label>
               :
@@ -179,7 +204,7 @@ export const MyAdvertisement = () => {
               <S.AddPhoto type="file" id="add_photo3" accept="image/*" onChange={(event) => {
                 setPhotos([...photos.slice(0, 2), event.target.files[0], ...photos.slice(3)])
                 setPhotoChanged3(true)
-                if (photos[2] !== undefined){
+                if (photos[2] !== undefined && photos[2] !== null){
                     //удалить
                     deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[2].url}`, token: token}).then((item) => {
                         console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[2].url}`, "token:", token, photos);
@@ -203,9 +228,21 @@ export const MyAdvertisement = () => {
                     })
                 }
                 }}/>
+                <button hidden={photos[2] ? false : true} onClick={() => {
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[2].url}`, token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[2].url}`, token: item})
+                            console.log("delete with update");
+                        }
+                    })
+                    setPhotos([...photos.slice(0, 2), null, ...photos.slice(3)])
+                }}>Удалить</button>
+                </S.AddPhotoBlock>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-            {photos[3] === undefined 
+          <S.AddPhotoBlock>
+            {photos[3] === undefined || photos[3] === null
               ?
               <label for="add_photo4"><img src="/img/add_photo.png" alt="add_photo" /></label>
               :
@@ -216,7 +253,7 @@ export const MyAdvertisement = () => {
               <S.AddPhoto type="file" id="add_photo4" accept="image/*" onChange={(event) => {
                 setPhotos([...photos.slice(0, 3), event.target.files[0], ...photos.slice(4)])
                 setPhotoChanged4(true)
-                if (photos[3] !== undefined){
+                if (photos[3] !== undefined && photos[3] !== null){
                     //удалить
                     deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[3].url}`, token: token}).then((item) => {
                         console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[3].url}`, "token:", token, photos);
@@ -240,9 +277,21 @@ export const MyAdvertisement = () => {
                     })
                 }
                 }}/>
+                <button hidden={photos[3] ? false : true} onClick={() => {
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[3].url}`, token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[3].url}`, token: item})
+                            console.log("delete with update");
+                        }
+                    })
+                    setPhotos([...photos.slice(0, 3), null, ...photos.slice(4)])
+                }}>Удалить</button>
+            </S.AddPhotoBlock>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-            {photos[4] === undefined 
+          <S.AddPhotoBlock>
+            {photos[4] === undefined || photos[4] === null
               ?
               <label for="add_photo5"><img src="/img/add_photo.png" alt="add_photo" /></label>
               :
@@ -253,7 +302,7 @@ export const MyAdvertisement = () => {
               <S.AddPhoto type="file" id="add_photo5" accept="image/*" onChange={(event) => {
                 setPhotos([...photos.slice(0, 4), event.target.files[0], ...photos.slice(5)])
                 setPhotoChanged5(true)
-                if (photos[4] !== undefined){
+                if (photos[4] !== undefined && photos[4] !== null){
                     //удалить
                     deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[4].url}`, token: token}).then((item) => {
                         console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[4].url}`, "token:", token, photos);
@@ -277,6 +326,17 @@ export const MyAdvertisement = () => {
                     })
                 }
                 }}/>
+                <button hidden={photos[4] ? false : true} onClick={() => {
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[4].url}`, token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[4].url}`, token: item})
+                            console.log("delete with update");
+                        }
+                    })
+                    setPhotos([...photos.slice(0, 4), null, ...photos.slice(5)])
+                }}>Удалить</button>
+            </S.AddPhotoBlock>
           </S.ModalAddPhotos>
         </S.ModalAddPhotosBar>
       </S.ModalPhotos>
