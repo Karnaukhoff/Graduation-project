@@ -54,7 +54,7 @@ function Header({page}) {
               ?
               (<label for="add_photo1"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
-              (<S.Success src={URL.createObjectURL(photos[0])} alt="added_photo"/>)
+              (<label for="add_photo1"><S.Success src={URL.createObjectURL(photos[0])} alt="added_photo"/></label>)
               }
               <S.AddPhoto type="file" id="add_photo1" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 0), event.target.files[0], ...photos.slice(1)])}}/>
@@ -64,7 +64,7 @@ function Header({page}) {
               ?
               (<label for="add_photo2"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
-              (<S.Success src={URL.createObjectURL(photos[1])} alt="added_photo"/>)
+              (<label for="add_photo2"><S.Success src={URL.createObjectURL(photos[1])} alt="added_photo"/></label>)
               }
               <S.AddPhoto type="file" id="add_photo2" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 1), event.target.files[0], ...photos.slice(2)])}}/>
@@ -74,7 +74,7 @@ function Header({page}) {
               ?
               (<label for="add_photo3"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
-              (<S.Success src={URL.createObjectURL(photos[2])} alt="added_photo"/>)
+              (<label for="add_photo3"><S.Success src={URL.createObjectURL(photos[2])} alt="added_photo"/></label>)
               }
               <S.AddPhoto type="file" id="add_photo3" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 2), event.target.files[0], ...photos.slice(3)])}}/>
@@ -84,7 +84,7 @@ function Header({page}) {
               ?
               (<label for="add_photo4"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
-              (<S.Success src={URL.createObjectURL(photos[3])} alt="added_photo"/>)
+              (<label for="add_photo4"><S.Success src={URL.createObjectURL(photos[3])} alt="added_photo"/></label>)
               }
               <S.AddPhoto type="file" id="add_photo4" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 3), event.target.files[0], ...photos.slice(4)])}}/>
@@ -94,7 +94,7 @@ function Header({page}) {
               ?
               (<label for="add_photo5"><img src="/img/add_photo.png" alt="add_photo" /></label>)
               :
-              (<S.Success src={URL.createObjectURL(photos[4])} alt="added_photo"/>)
+              (<label for="add_photo5"><S.Success src={URL.createObjectURL(photos[4])} alt="added_photo"/></label>)
               }
               <S.AddPhoto type="file" id="add_photo5" accept="image/*" onChange={(event) => {console.log(event);
                 setPhotos([...photos.slice(0, 4), event.target.files[0], ...photos.slice(5)])}}/>
@@ -212,7 +212,8 @@ function Header({page}) {
                 overlay: {
                     display: "flex",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    zIndex: 1
                 }
             }
         }>

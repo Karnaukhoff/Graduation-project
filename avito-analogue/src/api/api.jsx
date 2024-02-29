@@ -365,18 +365,16 @@ export async function postComment({pk, comment, token}) {
   const comments = await response.json();
   return comments;
 }
-export async function postNewPhoto({ id, photos, token}) {
-  const photosArray = new FormData();
-  
-  for (let elem of photos){
-    photosArray.append("file", elem);
-  }
+export async function postNewPhoto({ id, photo, token}) {
+  const newPhoto = new FormData();
+    newPhoto.append("file", photo);
+
   const response = await fetch(`${baseURL}/ads/${id}/image`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token.access_token}`,
     },
-    body: photosArray,
+    body: newPhoto,
 
   });
   if (response.status === 500) {
@@ -397,4 +395,39 @@ export async function postNewPhoto({ id, photos, token}) {
   }
   const result = await response.json();
   return result;
+}
+export async function deletePhoto({ id, url, token}) {
+  const response = await fetch(`${baseURL}/ads/${id}/image?file_url=${url}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+    },
+
+  });
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+  if (response.status === 401) {
+    console.log(token.access_token, token.refresh_token);
+    const newToken = await updateToken({
+      access: token.access_token,
+      refresh: token.refresh_token,
+    });
+    console.log(newToken);
+    return newToken;
+  }
+  const result = await response.json();
+  return result;
+}
+export async function getImage({id}) {
+  const response = await fetch(`${baseURL}/images/${id}`);
+  if (!response.ok) {
+    throw new Error("Ошибка сервера");
+  }
+  const image = await response.json();
+  return image;
 }

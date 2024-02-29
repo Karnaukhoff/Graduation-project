@@ -4,7 +4,7 @@ import * as S from "./styles/my-adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAd, getAd, getAllAds, getComments, postComment, updateAd } from "../api/api";
+import { deleteAd, deletePhoto, getAd, getAllAds, getComments, postComment, postNewPhoto, updateAd } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { dateFormat, priceFormat, reviewTitle, sellsFrom } from "../usefulFunctions";
 import { setAllAds } from "../store/slices/adSlice";
@@ -32,6 +32,11 @@ export const MyAdvertisement = () => {
     const [comments, setComments] = useState([]);
     const [commentText, setCommentText] = useState("");
     const navigate = useNavigate();
+    const [photoChanged1, setPhotoChanged1] = useState(false);
+    const [photoChanged2, setPhotoChanged2] = useState(false);
+    const [photoChanged3, setPhotoChanged3] = useState(false);
+    const [photoChanged4, setPhotoChanged4] = useState(false);
+    const [photoChanged5, setPhotoChanged5] = useState(false);
   
     useEffect(() => {
       getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
@@ -52,10 +57,15 @@ export const MyAdvertisement = () => {
         setDescription(ad.description);
         setPrice(ad.price);
         setModalIsOpenEdit(true);
+        //photoes
+        //добавить картинку в объявление
+        setPhotos(ad.images)
+        console.log(ad.images);
     };
-  
+
     const closeModalEdit = () => {
       setModalIsOpenEdit(false);
+      setPhotos([])
     };
 
     const openModalReview = () => {
@@ -84,56 +94,191 @@ export const MyAdvertisement = () => {
           <S.ModalFormNewArtP>Фотографии товара <S.ModalFormNewArtSpan>не более 5 фотографий</S.ModalFormNewArtSpan></S.ModalFormNewArtP>
           <S.ModalAddPhotosBar>
           <S.ModalAddPhotos>
-              {photos[0] === undefined 
+            {photos[0] === undefined 
               ?
-              (<label for="add_photo1"><img src="/img/add_photo.png" alt="add_photo" /></label>)
+              <label for="add_photo1"><img src="/img/add_photo.png" alt="add_photo" /></label>
               :
-              (<S.Success src={URL.createObjectURL(photos[0])} alt="added_photo"/>)
+                <label for="add_photo1">
+                    <S.Success src={photoChanged1 ? URL.createObjectURL(photos[0]) : `http://localhost:8090/${photos[0].url}`} alt="added_photo" />
+                </label>
               }
-              <S.AddPhoto type="file" id="add_photo1" accept="image/*" onChange={(event) => {console.log(event);
-                setPhotos([...photos.slice(0, 0), event.target.files[0], ...photos.slice(1)])}}/>
-        </S.ModalAddPhotos>
-          <S.ModalAddPhotos>
-              {photos[1] === undefined 
-              ?
-              (<label for="add_photo2"><img src="/img/add_photo.png" alt="add_photo" /></label>)
-              :
-              (<S.Success src={URL.createObjectURL(photos[1])} alt="added_photo"/>)
-              }
-              <S.AddPhoto type="file" id="add_photo2" accept="image/*" onChange={(event) => {console.log(event);
-                setPhotos([...photos.slice(0, 1), event.target.files[0], ...photos.slice(2)])}}/>
+              <S.AddPhoto type="file" id="add_photo1" accept="image/*" onChange={(event) => {
+                setPhotos([...photos.slice(0, 0), event.target.files[0], ...photos.slice(1)])
+                setPhotoChanged1(true)
+                if (photos[0] !== undefined){
+                    //удалить
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[0].url}`, token: token}).then((item) => {
+                        console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[0].url}`, "token:", token, photos);
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[0].url}`, "token:", item, photos);
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[0].url}`, token: item})
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                            console.log("delete with update");
+                        } else {
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token})
+                        }
+                    })
+                } else{
+                    //добавить новую
+                    postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                        }
+                    })
+                }
+                }}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-              {photos[2] === undefined 
+            {photos[1] === undefined 
               ?
-              (<label for="add_photo3"><img src="/img/add_photo.png" alt="add_photo" /></label>)
+              <label for="add_photo2"><img src="/img/add_photo.png" alt="add_photo" /></label>
               :
-              (<S.Success src={URL.createObjectURL(photos[2])} alt="added_photo"/>)
+                <label for="add_photo2">
+                    <S.Success src={photoChanged2 ? URL.createObjectURL(photos[1]) : `http://localhost:8090/${photos[1].url}`} alt="added_photo" />
+                </label>
               }
-              <S.AddPhoto type="file" id="add_photo3" accept="image/*" onChange={(event) => {console.log(event);
-                setPhotos([...photos.slice(0, 2), event.target.files[0], ...photos.slice(3)])}}/>
+              <S.AddPhoto type="file" id="add_photo2" accept="image/*" onChange={(event) => {
+                setPhotos([...photos.slice(0, 1), event.target.files[0], ...photos.slice(2)])
+                setPhotoChanged2(true)
+                if (photos[1] !== undefined){
+                    //удалить
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[1].url}`, token: token}).then((item) => {
+                        console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[1].url}`, "token:", token, photos);
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[1].url}`, "token:", item, photos);
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[1].url}`, token: item})
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                            console.log("delete with update");
+                        } else {
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token})
+                        }
+                    })
+                } else{
+                    //добавить новую
+                    postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                        }
+                    })
+                }
+                }}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-              {photos[3] === undefined 
+            {photos[2] === undefined 
               ?
-              (<label for="add_photo4"><img src="/img/add_photo.png" alt="add_photo" /></label>)
+              <label for="add_photo3"><img src="/img/add_photo.png" alt="add_photo" /></label>
               :
-              (<S.Success src={URL.createObjectURL(photos[3])} alt="added_photo"/>)
+                <label for="add_photo3">
+                    <S.Success src={photoChanged3 ? URL.createObjectURL(photos[2]) : `http://localhost:8090/${photos[2].url}`} alt="added_photo" />
+                </label>
               }
-              <S.AddPhoto type="file" id="add_photo4" accept="image/*" onChange={(event) => {console.log(event);
-                setPhotos([...photos.slice(0, 3), event.target.files[0], ...photos.slice(4)])}}/>
+              <S.AddPhoto type="file" id="add_photo3" accept="image/*" onChange={(event) => {
+                setPhotos([...photos.slice(0, 2), event.target.files[0], ...photos.slice(3)])
+                setPhotoChanged3(true)
+                if (photos[2] !== undefined){
+                    //удалить
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[2].url}`, token: token}).then((item) => {
+                        console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[2].url}`, "token:", token, photos);
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[2].url}`, "token:", item, photos);
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[2].url}`, token: item})
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                            console.log("delete with update");
+                        } else {
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token})
+                        }
+                    })
+                } else{
+                    //добавить новую
+                    postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                        }
+                    })
+                }
+                }}/>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-              {photos[4] === undefined 
+            {photos[3] === undefined 
               ?
-              (<label for="add_photo5"><img src="/img/add_photo.png" alt="add_photo" /></label>)
+              <label for="add_photo4"><img src="/img/add_photo.png" alt="add_photo" /></label>
               :
-              (<S.Success src={URL.createObjectURL(photos[4])} alt="added_photo"/>)
+                <label for="add_photo4">
+                    <S.Success src={photoChanged4 ? URL.createObjectURL(photos[3]) : `http://localhost:8090/${photos[3].url}`} alt="added_photo" />
+                </label>
               }
-              <S.AddPhoto type="file" id="add_photo5" accept="image/*" onChange={(event) => {console.log(event);
-                setPhotos([...photos.slice(0, 4), event.target.files[0], ...photos.slice(5)])}}/>
+              <S.AddPhoto type="file" id="add_photo4" accept="image/*" onChange={(event) => {
+                setPhotos([...photos.slice(0, 3), event.target.files[0], ...photos.slice(4)])
+                setPhotoChanged4(true)
+                if (photos[3] !== undefined){
+                    //удалить
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[3].url}`, token: token}).then((item) => {
+                        console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[3].url}`, "token:", token, photos);
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[3].url}`, "token:", item, photos);
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[3].url}`, token: item})
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                            console.log("delete with update");
+                        } else {
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token})
+                        }
+                    })
+                } else{
+                    //добавить новую
+                    postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                        }
+                    })
+                }
+                }}/>
           </S.ModalAddPhotos>
-          </S.ModalAddPhotosBar>
+          <S.ModalAddPhotos>
+            {photos[4] === undefined 
+              ?
+              <label for="add_photo5"><img src="/img/add_photo.png" alt="add_photo" /></label>
+              :
+                <label for="add_photo5">
+                    <S.Success src={photoChanged5 ? URL.createObjectURL(photos[4]) : `http://localhost:8090/${photos[4].url}`} alt="added_photo" />
+                </label>
+              }
+              <S.AddPhoto type="file" id="add_photo5" accept="image/*" onChange={(event) => {
+                setPhotos([...photos.slice(0, 4), event.target.files[0], ...photos.slice(5)])
+                setPhotoChanged5(true)
+                if (photos[4] !== undefined){
+                    //удалить
+                    deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[4].url}`, token: token}).then((item) => {
+                        console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[4].url}`, "token:", token, photos);
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            console.log("delete", "id:", JSON.parse(localStorage.getItem("postId")), "url:", `${photos[4].url}`, "token:", item, photos);
+                            deletePhoto({id: JSON.parse(localStorage.getItem("postId")), url: `${photos[0].url}`, token: item})
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                            console.log("delete with update");
+                        } else {
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token})
+                        }
+                    })
+                } else{
+                    //добавить новую
+                    postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: token}).then((item) => {
+                        if (item?.access_token){
+                            dispatch(setToken(item))
+                            postNewPhoto({id: JSON.parse(localStorage.getItem("postId")), photo: event.target.files[0], token: item})
+                        }
+                    })
+                }
+                }}/>
+          </S.ModalAddPhotos>
+        </S.ModalAddPhotosBar>
       </S.ModalPhotos>
       <S.ModalBlockPrice>
         <label for="price">Цена</label>
@@ -144,7 +289,7 @@ export const MyAdvertisement = () => {
         updateAd({id: ad.id, token: token, title: title, description: description, price: price}).then((item) => {
             if (item?.access_token){
                 console.log("update token");
-                updateAd({id: ad.id, token: token, title: ad.title, description: ad.description, price: ad.price}).then(() => {
+                updateAd({id: ad.id, token: item, title: title, description: description, price: price}).then(() => {
                     getAllAds().then((ads) => {
                         dispatch(setAllAds(ads))
                         navigate(`/`)
@@ -336,7 +481,8 @@ export const MyAdvertisement = () => {
                                             overlay: {
                                                 display: "flex",
                                                 justifyContent: "center",
-                                                alignItems: "center"
+                                                alignItems: "center",
+                                                zIndex: 1
                                             }
                                         }
                                     }>
