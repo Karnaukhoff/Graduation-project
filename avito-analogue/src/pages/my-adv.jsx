@@ -9,6 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { dateFormat, priceFormat, reviewTitle, sellsFrom } from "../usefulFunctions";
 import { setAllAds } from "../store/slices/adSlice";
 import { setToken } from "../store/slices/userSlice";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+// import required modules
+import { Pagination } from 'swiper/modules';
 
 export const MyAdvertisement = () => {
     const [modalIsOpenEdit, setModalIsOpenEdit] = useState(false);
@@ -58,7 +66,6 @@ export const MyAdvertisement = () => {
         setModalIsOpenReview(false);
         setCommentText("");
       };
-      console.log(ad);
     const modalContentEdit = (
       <>
       <S.ModalHeader>
@@ -237,10 +244,20 @@ export const MyAdvertisement = () => {
                         <S.ArticLeft>
                             <S.ArticFillImg>
                                 <S.ArticImgBlock>
-                                <S.BigImage
-                                    src={`http://localhost:8090/${ad?.images[0]?.url}`}
-                                    alt=""
-                                />
+                                <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+                    {
+                      // eslint-disable-next-line
+                      ad?.images.map((item) => {
+                        return(
+                        <SwiperSlide>
+                          <S.BigImage
+                            src={`http://localhost:8090/${item.url}`}
+                            alt=""
+                          />
+                        </SwiperSlide>)
+                      })
+                    }
+                </Swiper>
                                 </S.ArticImgBlock>
                                 <S.ArticImgBar>
                                 {ad?.images.length > 0 ? (

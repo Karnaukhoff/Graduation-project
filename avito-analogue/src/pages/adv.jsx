@@ -8,6 +8,14 @@ import { dateFormat, priceFormat, reviewTitle, sellsFrom } from "../usefulFuncti
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../store/slices/userSlice";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+
+// import required modules
+import { Pagination } from 'swiper/modules';
 
 export const Advertisement = () => {
   const [ad, setAd] = useState(null);
@@ -118,6 +126,7 @@ export const Advertisement = () => {
   );
 
   return (
+    <>
     <S.Container>
       <Header page={"adv"} />
       <main>
@@ -129,10 +138,21 @@ export const Advertisement = () => {
             <S.ArticLeft>
               <S.ArticFillImg>
                 <S.ArticImgBlock>
-                  <S.BigImage
-                    src={`http://localhost:8090/${ad?.images[0]?.url}`}
-                    alt=""
-                  />
+                <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+                    {
+                      // eslint-disable-next-line
+                      ad?.images.map((item) => {
+                        return(
+                        <SwiperSlide>
+                          <S.BigImage
+                            src={`http://localhost:8090/${item.url}`}
+                            alt=""
+                          />
+                        </SwiperSlide>)
+                      })
+                    }
+                </Swiper>
+                  
                 </S.ArticImgBlock>
                 <S.ArticImgBar>
                   {ad?.images.length > 0 ? (
@@ -247,5 +267,6 @@ export const Advertisement = () => {
         </S.MainContainerBlock>
       </main>
     </S.Container>
+    </>
   );
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { AppRoutes } from "./routes";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "./store/slices/userSlice";
+import './App.css'
 
 function App() {
   const dispatch = useDispatch();
