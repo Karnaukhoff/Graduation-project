@@ -251,7 +251,8 @@ export const Profile = () => {
                             overlay: {
                                 display: "flex",
                                 justifyContent: "center",
-                                alignItems: "center"
+                                alignItems: "center",
+                                zIndex: 1
                             }
                         }
                         }>

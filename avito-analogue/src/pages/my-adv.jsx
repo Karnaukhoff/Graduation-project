@@ -521,7 +521,8 @@ export const MyAdvertisement = () => {
                                             overlay: {
                                                 display: "flex",
                                                 justifyContent: "center",
-                                                alignItems: "center"
+                                                alignItems: "center",
+                                                zIndex: 1
                                             }
                                         }
                                     }>

@@ -217,6 +217,7 @@ export const Advertisement = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
+                        zIndex: 1
                       },
                     }}
                   >
