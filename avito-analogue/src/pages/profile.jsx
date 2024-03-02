@@ -187,8 +187,8 @@ export const Profile = () => {
 
                     //добавить
                     <S.AddAvatarBlock>
-                      <S.AddAvatarInput type="file" onChange={UploadAvatar} multiple/>
-                      <S.SettingsChangePhoto>Добавить</S.SettingsChangePhoto>
+                      <S.AddAvatarInput type="file" onChange={UploadAvatar} id="input__fileAd" multiple/>
+                      <S.SettingsChangePhoto for="input__fileAd">Добавить</S.SettingsChangePhoto>
                     </S.AddAvatarBlock>
                   )}
                 </S.SettingsLeft>

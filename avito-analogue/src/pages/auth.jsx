@@ -130,9 +130,6 @@ export function Authorization() {
         .finally(() => {
           setLoading(false);
         });
-        /*console.log(user);
-        dispatch(setUser(user));
-        navigate("/");*/
       })
       .catch((item) => {
         setError(item.message);
