@@ -82,9 +82,11 @@ export const Profile = () => {
           item,
           user
         ).then((newItem) => {
+          localStorage.setItem("authData", JSON.stringify(newItem));
           dispatch(setUser(newItem));
         });
       } else {
+        localStorage.setItem("authData", JSON.stringify(item));
         dispatch(setUser(item));
         dispatch(setToken(JSON.parse(localStorage.getItem("token"))));
       }
