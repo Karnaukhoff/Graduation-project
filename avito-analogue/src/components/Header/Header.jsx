@@ -13,6 +13,8 @@ function Header({page}) {
   const [price, setPrice] = useState();
   const [photos, setPhotos] = useState([]);
   const [writeTitle, setWriteTitle] = useState(false);
+  const [priceError, setPriceError] = useState(false);
+  const [priceMessage, setPriceMessage] = useState("");
   const dispatch=  useDispatch();
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
@@ -104,13 +106,36 @@ function Header({page}) {
     <S.ModalBlockPrice>
       <label for="price">Цена</label>
       <S.ModalInputPrice onChange={(event) => {setPrice(Number(event.target.value))}}/>
+      {
+          priceError ?
+          <S.WriteTitle>{priceMessage}</S.WriteTitle>
+          :
+          null
+      }
     </S.ModalBlockPrice>
     <S.ModalPublishButton onClick={() => {
       if (title === ""){
         setWriteTitle(true)
         return
+      } else {
+        setWriteTitle(false)
       }
-      setWriteTitle(false)
+      if (price === undefined){
+        setPriceMessage("Цена не заполнена")
+        setPriceError(true)
+        return
+      }
+      if (price <= 0){
+        setPriceMessage("Цена должна быть больше 0")
+        setPriceError(true)
+        return
+      }
+      if (isNaN(price)){
+        setPriceMessage("Цена введена некорректно")
+        setPriceError(true)
+        return
+      }
+      setPriceError(false)
       if (photos.length === 0){
         postAd({title: title, description: description, price: price, token: token}).then((item) => {
           console.log(title, description, price, token);
@@ -187,6 +212,7 @@ function Header({page}) {
             });}
         })
       }
+      closeModal()
     }
     //require title and price
     }>Опубликовать</S.ModalPublishButton>
