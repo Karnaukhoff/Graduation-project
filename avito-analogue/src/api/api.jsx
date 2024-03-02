@@ -18,6 +18,7 @@ export async function signUp({ email, password, name, surname, city }) {
       surname: surname,
       city: city,
       role: "user",
+      phone: ""
     }),
     headers: {
       "content-type": "application/json",
