@@ -297,7 +297,7 @@ export const ModalReviews = styled.div`
   width: 550px;
   height: 495px;
 `;
-export const Review= styled.div`
+export const Review= styled.li`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

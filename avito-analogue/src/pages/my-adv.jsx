@@ -417,10 +417,10 @@ export const MyAdvertisement = () => {
             
         </S.ModalAddReviewForm>
         <S.ModalReviews>
-
+        <ul>
         {comments.map((comment) => {
           return (
-            <S.Review>
+            <S.Review key={comment.id}>
               <S.ReviewItem>
                 <S.ReviewLeft>
                   <S.ReviewImg>
@@ -441,6 +441,7 @@ export const MyAdvertisement = () => {
             </S.Review>
           );
         })}
+        </ul>
             
 
         </S.ModalReviews>
