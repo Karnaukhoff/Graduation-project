@@ -224,6 +224,11 @@ function Header({page}) {
           localStorage.removeItem("authData")
           dispatch(setUser(null))
           localStorage.removeItem("token")
+          localStorage.removeItem("arr")
+          localStorage.removeItem("auth")
+          localStorage.removeItem("postId")
+          localStorage.removeItem("userId")
+          localStorage.removeItem("userCourses")
           dispatch(setToken(null))
           window.location.href = "/register"
         }}>Выйти</S.HeaderBtnMainEnter>

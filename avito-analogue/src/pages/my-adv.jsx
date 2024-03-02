@@ -38,21 +38,29 @@ export const MyAdvertisement = () => {
     const [photoChanged4, setPhotoChanged4] = useState(false);
     const [photoChanged5, setPhotoChanged5] = useState(false);
 
-    if (user === null){
-        navigate("*")
-    }
+
     useEffect(() => {
+    if (user === null || !JSON.parse(localStorage.getItem("postId"))){
+        navigate("*")
+        return
+    }
       getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
         setAd(post);
       });
+      // eslint-disable-next-line
     }, []);
     useEffect(() => {
+        if (user === null || !JSON.parse(localStorage.getItem("postId"))){
+            navigate("*")
+            return
+        }
         getComments({ pk: JSON.parse(localStorage.getItem("postId")) }).then(
           (items) => {
             console.log(items);
             setComments(items);
           }
         );
+        // eslint-disable-next-line
       }, []);
 
     const openModalEdit = () => {
