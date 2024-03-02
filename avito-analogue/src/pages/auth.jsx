@@ -49,7 +49,6 @@ export function Authorization() {
           })
         })
         localStorage.setItem("token", JSON.stringify(userToken))
-        localStorage.setItem("password", JSON.stringify(password))
         dispatch(setToken(userToken))
         navigate("/")
         })

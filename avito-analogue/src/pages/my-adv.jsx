@@ -38,6 +38,9 @@ export const MyAdvertisement = () => {
     const [photoChanged4, setPhotoChanged4] = useState(false);
     const [photoChanged5, setPhotoChanged5] = useState(false);
 
+    if (user === null){
+        navigate("*")
+    }
     useEffect(() => {
       getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
         setAd(post);
