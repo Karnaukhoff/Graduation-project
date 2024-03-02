@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Описание проекта
+Сайт онлайн объявлений(аналог Авито). 
+Данная платформа представляет собой электронный каталог объявлений о товарах, услугах, вакансиях, резюме и других предложениях (вместе — «товары»), которые пользователи могут предлагать и искать с целью заключения сделок.
+1. Главная страница: Пока пользователь не авторизован, он имеет доступ только к Главной странице, на которой отображаются товары, которые размещены на площадке. Пользователь может осуществлять поиск по объявлениям с помощью строки поиска товара.
+2. Пользователь имеет возможность авторизации и регистрации на сайте.
+3. Личный кабинет: В личном кабинете отображается: приветствие пользователя, имя и фамилия, аватарка и телефон. Все поля могут редактироваться.Если пользователь не редактировал эти поля, то кнопка "Сохранить" должна быть неактивной.
+4. Если изменил хотя бы 1 поле, то кнопка должна быть активной.
+5. Ниже в профиле отображаются "Мои товары": По клику на товар открывается карточка, где указана цена, наименование и описание товара, телефон и имя продавца. Также представлены отзывы пользователей о товаре.
+6. Если эту карточку открывает продавец, он имеет возможность редактировать цену, наименование и описание товара. Также, есть возможность снять объявление с публикации.
+7. Кнопка "Разместить объявление":По клику на кнопку открывается модальное окно и у продавца есть возможность добавить цену, наименование и описание товара, и его картинку. В конце окна кнопка "Опубликовать".
+8. Когда объявление опубликовано, можно открыть карточку товара, где есть возможность редактировать цену, наименование и описание товара.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Над проектом работал: https://github.com/Karnaukhoff
+# Технологии в проекте
+1. HTML
+2. React
+3. Styled-components
+4. Redux
+5. Swiper
 
-In the project directory, you can run:
+# Установка и запуск
+1. Установите Docker: https://www.docker.com/
+2. Перезагрузите ПК
+3. Откройте Docker с помощью ярлыка
+4. Скачайте архив и разархивируйте его: https://drive.google.com/file/d/1pFE-NRANTsWmQwTyURjHXuECMmoKCFjO/view
+5. Откройте терминал, укажите путь к этой папке и запустите команду: docker-compose -f docker-compose-backend.yaml up -d. В случае если сервер не запустится, введите эту команду повторно. Далее все запросы будут доступны по адресу: http://localhost:8090/. Чтобы остановить работу сервера, введите команду: docker-compose down
+6. Откройте VS Code
+7. Клонируйте репозиторий на свой компьютер
+8. Установите зависимость npm install
+9. Выберите нужный путь через команду в терминале cd "<путь>"
+10. Запустите проект через команду: npm start
+11. Откройте проект по адресу: http://localhost:3000
 
-### `npm start`
+# Поставленные задачи и оценочное время выполнения
+1. Верстка всех страниц для Desktop-версии (8 часов)
+2. Развернуть Backend (1 час)
+3. Реализация поведения незарегистрированного пользователя (5 часа)
+4. Реализация функционала регистрации и аутентификации пользователя (5 часов)
+5. Поведение зарегистрированного пользователя (5 часов)
+6. Корректировки (5 часов)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Общее оценочное время работы над всем проектом: 29 часа
+# Фактически затраченное время
+1. Верстка всех страниц для Desktop-версии (16 часов)
+2. Развернуть Backend (1 час)
+3. Реализация поведения незарегистрированного пользователя (18 часов)
+4. Реализация функционала регистрации и аутентификации пользователя (6 часов)
+5. Поведение зарегистрированного пользователя (28 часов)
+6. Корректировки (17 часов)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Фактически затраченное время: 86 часов
