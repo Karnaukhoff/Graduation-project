@@ -41,8 +41,12 @@ export function Authorization() {
           return;
         }
         if (userToken?.detail){
-          if (userToken?.detail[0]?.msg === "value is not a valid email address" || userToken?.detail === "Incorrect email") {
+          if (userToken?.detail === "Incorrect email") {
             setError("Неверный логин");
+            setLoading(false);
+            return;
+          } else if (userToken?.detail[0].msg === "value is not a valid email address"){
+            setError("Формат логина введён неверно");
             setLoading(false);
             return;
           }
