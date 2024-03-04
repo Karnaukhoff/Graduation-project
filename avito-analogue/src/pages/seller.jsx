@@ -80,11 +80,15 @@ export const Seller = () => {
           <S.MainTitle>Товары продавца</S.MainTitle>
           <S.MainContent>
             <S.MainCards>
+              <ul style={{
+                "list-style": "none"
+              }}>
               {
               // eslint-disable-next-line
               allAds.map((ad) => {
                 if (user?.id === ad?.user.id){
-                  return <Advertisement 
+                  return <li key={ad.id}>
+                  <Advertisement 
                   images={ad.images} 
                   title={ad.title} 
                   price={ad.price} 
@@ -92,9 +96,11 @@ export const Seller = () => {
                   released={ad.created_on} 
                   id={ad.id}
                   />
+                  </li>
                 }
               })
                 }
+              </ul>
             </S.MainCards>
           </S.MainContent>
         </S.MainContainer>

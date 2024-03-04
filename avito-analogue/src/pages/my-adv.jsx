@@ -462,18 +462,24 @@ export const MyAdvertisement = () => {
                             <S.ArticFillImg>
                                 <S.ArticImgBlock>
                                 <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
+                    <ul  style={{
+                "list-style": "none"
+              }}>
                     {
                       // eslint-disable-next-line
                       ad?.images.map((item) => {
                         return(
+                            <li key={item.id}>
                         <SwiperSlide>
                           <S.BigImage
                             src={`http://localhost:8090/${item.url}`}
                             alt=""
                           />
-                        </SwiperSlide>)
+                        </SwiperSlide>
+                        </li>)
                       })
                     }
+                    </ul>
                 </Swiper>
                                 </S.ArticImgBlock>
                                 <S.ArticImgBar>
