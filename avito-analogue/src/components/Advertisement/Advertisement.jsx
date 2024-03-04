@@ -8,12 +8,11 @@ function Advertisement({ images, title, price, city, released, id, userId }) {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
 
-  //4. переключение фотографий
   console.log()
   return (
     <S.Item onClick={() => {
       localStorage.setItem("postId", JSON.stringify(id))
-      if (user?.id === userId){
+      if (user?.id === userId && user !== null){
         navigate(`/my_ad`)
       } else {navigate(`/advertisement`)}      
     }}>
