@@ -24,14 +24,14 @@ export const AdvImg = styled.div`
     height: 270px;
     background-color: #F0F0F0;
 `;
-export const AdvImgLink = styled.a``;
+export const AdvImgLink = styled.div``;
 export const AdvPhoto = styled.img`
     width: 268px;
     height: 270px;
     border: 1px solid #000000;
 `;
 export const AdvContent = styled.div``;
-export const AdvContentLink = styled.a``;
+export const AdvContentLink = styled.div``;
 export const AdvContentTitle = styled.h3`
     font-size: 22px;
     font-weight: 500;

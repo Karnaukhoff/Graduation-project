@@ -161,12 +161,12 @@ export const MainContent = styled.h2`
     width: 100%;
     margin: 0 auto;
 `;
-export const MainCards = styled.div`
+export const MainCards = styled.ul`
     max-width: 1175px;
     width: 100%;
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: (270px)[4];
+    -ms-grid-columns: (270px);
         grid-template-columns: repeat(4, 270px);
     grid-auto-rows: 441px;
     grid-gap: 80px 26px;
@@ -185,4 +185,5 @@ export const MainCards = styled.div`
         background-color: #0080C1;
         border-radius: 3px;
     }
+    list-style: none;
 `;

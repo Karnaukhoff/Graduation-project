@@ -19,7 +19,7 @@ function Advertisement({ images, title, price, city, released, id, userId }) {
     }}>
       <S.Adv>
         <S.AdvImg>
-          <S.AdvImgLink href="#">
+          <S.AdvImgLink>
             <S.AdvPhoto src={`http://localhost:8090/${images[0]?.url}`} />
             
           </S.AdvImgLink>

@@ -66,6 +66,7 @@ export const Main = () => {
             <S.MainCards>
               {allAds.map((item) => {
                 return (
+                  <li key={item.id}>
                   <Advertisement
                     images={item.images}
                     title={item.title}
@@ -75,6 +76,7 @@ export const Main = () => {
                     id={item.id}
                     userId={item.user_id}
                   />
+                  </li>
                 );
               })}
             </S.MainCards>

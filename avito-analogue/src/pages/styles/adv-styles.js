@@ -73,13 +73,14 @@ export const ArticImgBar = styled.div`
   overflow: hidden;
   margin-left: -5px;
 `;
-export const ArticImgBarDiv = styled.div`
+export const ArticImgBarDiv = styled.li`
   width: 88px;
   min-width: 88px;
   height: 88px;
   background-color: #f0f0f0;
   border: 2px solid #f0f0f0;
   margin: 0 5px;
+  list-style: none;
 `;
 export const ArticImgBarDivPicture = styled.img`
   width: 100%;
